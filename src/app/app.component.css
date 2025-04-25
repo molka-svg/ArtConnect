@@ -1,0 +1,74 @@
+.navbar {
+    background-color: #212221; /* Couleur verte pour la navbar */
+    padding: 15px 30px; /* Espacement plus large */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Ombre plus marquée */
+    border-radius: 10px; /* Bordures arrondies plus douces */
+    transition: all 0.3s ease-in-out; /* Transition fluide pour les changements */
+  }
+  
+  .navbar:hover {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Ombre plus profonde au survol */
+  }
+  
+  .navbar-light .navbar-brand {
+    color: #ffffff;
+    font-size: 1.3rem; 
+    font-weight: 600; /* Légèrement moins gras pour une apparence plus élégante */
+    letter-spacing: 0.5px; /* Espacement des lettres légèrement augmenté */
+    text-transform: uppercase; /* Majuscules pour un aspect plus moderne */
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .navbar-light .navbar-brand:hover {
+    color: #f1f1f1;
+    transform: translateY(-2px); 
+  }
+  
+  .navbar-toggler {
+    border-color: #ffffff;
+  }
+  
+  .navbar-toggler-icon {
+    background-color: #ffffff;
+  }
+  
+  .navbar-nav .nav-link {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1.1rem; 
+    padding: 12px 20px;
+    margin-right: 15px;
+    border-radius: 25px; 
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    background-color: #ffffff;
+    color: #4C9F70;
+    transform: scale(1.05);
+  }
+  
+  .navbar-nav .nav-link:last-child {
+    margin-right: 0; 
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 10px 15px;
+    }
+  
+    .navbar-light .navbar-brand {
+      font-size: 1.1rem; 
+    }
+  
+    .navbar-nav {
+      text-align: center;
+    }
+  
+    .navbar-nav .nav-link {
+      font-size: 1.2rem; 
+      padding: 10px 20px;
+      margin: 5px 0; 
+    }
+  }
+  

@@ -1,0 +1,103 @@
+
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 5px;
+}
+
+button:nth-child(1) {
+    background: linear-gradient(45deg, #d32f2f, #ff5252);
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.4);
+}
+
+button:nth-child(2) {
+    background: linear-gradient(45deg, #6d4c41, #a1887f);
+    box-shadow: 0 4px 10px rgba(109, 76, 65, 0.4);
+}
+
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1);
+}
+.all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/assets/images/MBA_2022_19.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  
+}
+.login-container {
+    display: flex;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.logo {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    background: url('/assets/images/logo.jpg') no-repeat center/cover;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+}
+.login-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+h2 {
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+input {
+    margin-bottom: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    outline: none;
+}
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+button {
+    padding: 12px;
+    background: linear-gradient(45deg, #a70e0e, #320101);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.c{
+    color:gray;
+    text-align: center;
+}
+button:hover {
+    background: linear-gradient(45deg, #c3182c, #c00606);
+    transform: scale(1.05);
+}
