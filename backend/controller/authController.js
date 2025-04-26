@@ -26,9 +26,9 @@ const register = (req, res) => {
 
 
 const login = (req, res) => {
-  const { email, password } = req.body;
+  const { mail, password } = req.body;
 
-  userModel.findByEmail(email, (err, results) => {
+  userModel.findByEmail(mail, (err, results) => {
     if (err) {
       console.error('Erreur SQL:', err);  
       return res.status(500).json({ error: 'Erreur SQL' });
@@ -58,7 +58,7 @@ const login = (req, res) => {
         user: {
           id: user.userid,
           nom: user.nom,
-          email: user.mail,  
+          mail: user.mail,  
           role: user.role
         }
       });

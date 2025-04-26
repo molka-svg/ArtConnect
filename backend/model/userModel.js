@@ -15,7 +15,7 @@ const createUser = (user, callback) => {
 };
 
 const findByEmail = (mail, callback) => {
-  db.query('SELECT * FROM users WHERE mail = ?', [email], callback);
+  db.query('SELECT * FROM users WHERE mail = ?', [mail], callback);
 };
 
 module.exports = {
