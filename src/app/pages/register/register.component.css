@@ -13,10 +13,10 @@
     display: flex;
     background: rgba(255, 255, 255, 0.15);
     padding: 25px;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    width: 420px;
-    backdrop-filter: blur(12px);
+    width: 520px;
+    backdrop-filter: blur(9px);
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
   

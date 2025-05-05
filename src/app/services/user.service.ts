@@ -13,6 +13,7 @@ private url='http://localhost:3000/api/users';
     return this.http.post(`${this.url}/register`,userData);
 
   }
+  
   login(Login:any){
     return this.http.post(`${this.url}/login`,Login);
   }

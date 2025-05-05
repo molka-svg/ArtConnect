@@ -10,12 +10,15 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const userRoutes = require('./routes/userRoutes');
-app.use('/api/users', userRoutes); 
+const oeuvreRoutes = require('./routes/oeuvreRoutes');
+
+app.use('/api/users', userRoutes);
+app.use('/api/oeuvres', oeuvreRoutes);
 
 app.get('/', (req, res) => {
   res.send('API fonctionne 😎');
 });
 
 app.listen(port, () => {
-  console.log(` Serveur démarré sur http://localhost:${port}`);
+  console.log(`Serveur démarré sur http://localhost:${port}`);
 });

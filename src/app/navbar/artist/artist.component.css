@@ -1,0 +1,9 @@
+/* Vous pouvez ajuster le style du navbar ici */
+.navbar {
+    background-color: #f8f9fa;
+  }
+  
+  .navbar .navbar-nav .nav-item .nav-link {
+    font-size: 18px;
+  }
+  

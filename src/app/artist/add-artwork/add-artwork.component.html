@@ -1,1 +1,13 @@
-<p>add-artwork works!</p>
+<div class="all">
+
+
+<H3>ADD NEW ARTWORK!</H3>
+<form (ngSubmit)="onSubmit()">
+    <input type="text" placeholder="Titre" [(ngModel)]="artwork.titre" name="titre" required />
+    <textarea placeholder="Description" [(ngModel)]="artwork.description" name="description"></textarea>
+    <input type="number" placeholder="Prix" [(ngModel)]="artwork.prix" name="prix" />
+    <input type="text" placeholder="Type" [(ngModel)]="artwork.type" name="type" />
+    <input type="text" placeholder="Image URL" [(ngModel)]="artwork.image" name="image" />
+    <button type="submit">Ajouter</button>
+  </form>
+</div>  
