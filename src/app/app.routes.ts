@@ -7,16 +7,20 @@ import { MyAuctionsComponent } from './artist/my-auctions/my-auctions.component'
 import { AddArtworkComponent } from './artist/add-artwork/add-artwork.component';
 import { ViewArtworkComponent } from './artist/view-artwork/view-artwork.component';
 import { EditArtworkComponent } from './artist/edit-artwork/edit-artwork.component';
+import { PanierComponent } from './pages/panier/panier.component'; // Importer PanierComponent
+
 export const routes: Routes = [
-    {path:'login',component:LoginComponent},
-    {path:'user/register',component:RegisterComponent},
-    {path:'home',component:HomeComponent},
-{ path: '', pathMatch: 'full', redirectTo: 'home' },
-{path:'add',component:AddArtworkComponent},
-{path:'mes-oeuvres', component:ViewArtworkComponent},
-{path:'my-auctions',component:MyAuctionsComponent},
-{path:'edit-artwork/:id',component:EditArtworkComponent},
-{
-    path:'user',loadChildren:()=>import('./user/user.module').then((m)=>m.UserModule)
-}
+  { path: 'login', component: LoginComponent },
+  { path: 'user/register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: 'add', component: AddArtworkComponent },
+  { path: 'mes-oeuvres', component: ViewArtworkComponent },
+  { path: 'my-auctions', component: MyAuctionsComponent },
+  { path: 'edit-artwork/:id', component: EditArtworkComponent },
+  { path: 'panier', component: PanierComponent }, // Ajouter cette ligne pour la page panier
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
+  },
 ];

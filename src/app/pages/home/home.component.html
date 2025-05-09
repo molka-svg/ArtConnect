@@ -1,11 +1,49 @@
-<div class="home-background">
-    <div class="overlay">
-      <div class="content">
-        <h1>Bienvenue sur <span>ArtConnect</span></h1>
-        <p class="intro">
-          Une plateforme artistique où talents et passion se rencontrent.
-        </p>
+<div class="container">
+  <!-- Sidebar pour les filtres -->
+  <aside class="sidebar">
+    <h3>Filtres</h3>
+    <label>Nom de l'œuvre :</label>
+    <input
+      type="text"
+      [(ngModel)]="nomFiltre"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher par nom"
+    />
+    <label>Nom de l'artiste :</label>
+    <input
+      type="text"
+      [(ngModel)]="artisteFiltre"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher par artiste"
+    />
+    <label>Type d'œuvre :</label>
+    <select [(ngModel)]="typeFiltre" (change)="appliquerFiltres()">
+      <option value="">Tous</option>
+      <option value="peinture">Peinture</option>
+      <option value="sculpture">Sculpture</option>
+      <option value="photographie">Photographie</option>
+    </select>
+    <label>Prix maximum :</label>
+    <input type="number" [(ngModel)]="prixMax" (input)="appliquerFiltres()" placeholder="Prix max" />
+  </aside>
+
+  <!-- Liste des œuvres -->
+  <div class="oeuvres-grid">
+    <div *ngFor="let oeuvre of oeuvresFiltrees" class="oeuvre-card">
+      <img [src]="oeuvre.image" alt="{{ oeuvre.titre }}" class="oeuvre-image" />
+      <div class="oeuvre-info">
+        <h3>{{ oeuvre.titre }}</h3>
+        <p class="price">{{ oeuvre.prix }} €</p>
+        <div class="actions">
+          <button class="btn btn-add" (click)="ajouterAuPanier(oeuvre)">Ajouter au panier</button>
+          <button class="btn btn-details" (click)="voirDetails(oeuvre)">Détails</button>
+        </div>
       </div>
     </div>
   </div>
-  
+</div>
+
+<!-- Bouton pour consulter le panier -->
+<div class="panier-action">
+  <a routerLink="/panier" class="btn btn-panier">Consulter le panier</a>
+</div>
