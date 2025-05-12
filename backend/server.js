@@ -11,9 +11,11 @@ app.use(bodyParser.json());
 
 const userRoutes = require('./routes/userRoutes');
 const oeuvreRoutes = require('./routes/oeuvreRoutes');
+const evenementRoutes = require('./routes/evenementRoutes');
 
 app.use('/api/users', userRoutes);
 app.use('/api/oeuvres', oeuvreRoutes);
+app.use('/api/evenements', evenementRoutes);
 
 app.get('/', (req, res) => {
   res.send('API fonctionne 😎');

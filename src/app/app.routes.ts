@@ -8,7 +8,9 @@ import { AddArtworkComponent } from './artist/add-artwork/add-artwork.component'
 import { ViewArtworkComponent } from './artist/view-artwork/view-artwork.component';
 import { EditArtworkComponent } from './artist/edit-artwork/edit-artwork.component';
 import { PanierComponent } from './pages/panier/panier.component'; // Importer PanierComponent
-
+import { AddEvenementComponent } from './artist/add-evenement/add-evenement.component';
+import { EditEvenementComponent } from './artist/edit-evenement/edit-evenement.component';
+import { ListEvenementComponent } from './artist/list-evenement/list-evenement.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent },
@@ -18,7 +20,10 @@ export const routes: Routes = [
   { path: 'mes-oeuvres', component: ViewArtworkComponent },
   { path: 'my-auctions', component: MyAuctionsComponent },
   { path: 'edit-artwork/:id', component: EditArtworkComponent },
-  { path: 'panier', component: PanierComponent }, // Ajouter cette ligne pour la page panier
+  { path: 'panier', component: PanierComponent }, 
+  { path: 'update-evenement', component: EditEvenementComponent }, 
+  { path: 'artiste/mes-evenements', component: ListEvenementComponent}, 
+  {path:'artiste/add-evenement',component:AddEvenementComponent},
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),

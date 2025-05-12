@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h3>Ajouter un Événement</h3>
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Titre</label>
+      <input [(ngModel)]="evenement.titre" name="titre" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea [(ngModel)]="evenement.description" name="description" class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input [(ngModel)]="evenement.date_evt" name="date_evt" type="date" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Heure</label>
+      <input [(ngModel)]="evenement.heure" name="heure" type="time" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Lieu</label>
+      <input [(ngModel)]="evenement.lieu" name="lieu" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Prix Ticket</label>
+      <input [(ngModel)]="evenement.prix_ticket" name="prix_ticket" type="number" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Nombre de Places</label>
+      <input [(ngModel)]="evenement.nombre_places" name="nombre_places" type="number" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success mt-4">Créer</button>
+  </form>
+</div>

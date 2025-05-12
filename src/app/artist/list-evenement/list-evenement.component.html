@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-end mb-3">
+    <a routerLink="/artist/add-evenement" class="btn btn-primary">Ajouter un événement</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let evenement of evenements">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">{{ evenement.nom }}</h5>
+          <p class="card-text">{{ evenement.description }}</p>
+          <p class="card-text"><strong>Date :</strong> {{ evenement.date_evt }} à {{ evenement.heure }}</p>
+          <p class="card-text"><strong>Lieu :</strong> {{ evenement.lieu }}</p>
+          <p class="card-text"><strong>Prix :</strong> {{ evenement.prix_ticket }} DT</p>
+          <p class="card-text"><strong>Places :</strong> {{ evenement.places_disponibles }} / {{ evenement.nombre_places }}</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <button class="btn btn-outline-primary" (click)="editEvenement(evenement.id)">Modifier</button>
+          <button class="btn btn-outline-danger" (click)="deleteEvenement(evenement.id)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

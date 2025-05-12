@@ -1,4 +1,4 @@
-const db = require('../config/db'); // Assure-toi que cette ligne est présente
+const db = require('../config/db');
 const Oeuvre = require('../model/oeuvreModel');
 
 exports.ajouterOeuvre = async (req, res) => {

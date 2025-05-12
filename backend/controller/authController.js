@@ -13,7 +13,7 @@ const register = (req, res) => {
     });
   });
 };
-
+ 
 const login = (req, res) => {
   const { mail, password } = req.body;
   userModel.findByEmail(mail, (err, results) => {

@@ -1,21 +1,42 @@
 <div class="container-fluid">
-
   <nav class="navbar navbar-expand-lg navbar-light shadow-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLink="login">
-        <i class="bi bi-house-door"></i> <strong>Login</strong>
-      </a>
-      <div>
+      <!-- Logo/Accueil - visible par tous -->
       <a class="navbar-brand" routerLink="home">
-        <i class="bi bi-house-door"></i> <strong>Home</strong>
+        <i class="bi bi-house-door"></i> <strong>ArtGallery</strong>
       </a>
-    </div>
+
+      <!-- Partie utilisateur connecté -->
+      <div *ngIf="authService.isLoggedIn()">
+        <!-- Navbar spécifique aux artistes -->
+        <div *ngIf="authService.isArtist()" class="d-flex">
+          <a class="nav-link mx-2" routerLink="mes-oeuvres" routerLinkActive="active">
+            <i class="bi bi-palette"></i> Mes œuvres
+          </a>
+          <a class="nav-link mx-2" routerLink="mes-encheres" routerLinkActive="active">
+            <i class="bi bi-hammer"></i> Mes enchères
+          </a>
+          <a class="nav-link mx-2" routerLink="mes-evenements" routerLinkActive="active">
+            <i class="bi bi-calendar-event"></i> Mes événements
+          </a>
+        </div>
+
+        <!-- Bouton déconnexion -->
+        <button class="btn btn-outline-danger ms-3" (click)="logout()">
+          <i class="bi bi-box-arrow-right"></i> Déconnexion
+        </button>
+      </div>
+
+      <!-- Partie visiteur non connecté -->
+      <div *ngIf="!authService.isLoggedIn()">
+        <a class="btn btn-outline-primary" routerLink="login">
+          <i class="bi bi-box-arrow-in-right"></i> Connexion
+        </a>
+      </div>
     </div>
   </nav>
-  
-  
+
   <div class="content">
     <router-outlet></router-outlet>
   </div>
-
 </div>
