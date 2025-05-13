@@ -1,1 +1,70 @@
-<p>artworks works!</p>
+<div class="container">
+  <aside class="sidebar">
+    <h3>Filtres</h3>
+    <label>Nom de l'œuvre :</label>
+    <input
+      type="text"
+      [(ngModel)]="nomFiltre"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher par nom"
+    />
+    <label>Nom de l'artiste :</label>
+    <input
+      type="text"
+      [(ngModel)]="artisteFiltre"
+      (input)="appliquerFiltres()"
+      placeholder="Rechercher par artiste"
+    />
+    <label>Type d'œuvre :</label>
+    <select [(ngModel)]="typeFiltre" (change)="appliquerFiltres()">
+      <option value="">Tous</option>
+      <option value="peinture">Peinture</option>
+      <option value="sculpture">Sculpture</option>
+      <option value="photographie">Photographie</option>
+    </select>
+    <label>Prix maximum :</label>
+    <input
+      type="number"
+      [(ngModel)]="prixMax"
+      (input)="appliquerFiltres()"
+      placeholder="Prix max"
+    />
+  </aside>
+
+  <div class="oeuvres-grid">
+    <div *ngFor="let oeuvre of oeuvresFiltrees" class="oeuvre-card">
+      <img [src]="oeuvre.image" alt="{{ oeuvre.titre }}" class="oeuvre-image" />
+      <div class="oeuvre-info">
+        <h3>{{ oeuvre.titre }}</h3>
+        <p class="artiste">{{ oeuvre.artiste }}</p>
+        <p class="type">{{ oeuvre.type }}</p>
+        <p class="price"><i class="fas fa-coins"></i> {{ oeuvre.prix }} DT</p>
+        <div class="actions">
+          <button class="btn btn-add" (click)="ajouterAuPanier(oeuvre)">
+            <i class="fas fa-cart-plus icon-sm"></i> Ajouter
+          </button>
+          <button class="btn btn-details" (click)="voirDetails(oeuvre)">
+            <i class="fas fa-info-circle icon-sm"></i> Détails
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Détails affichés dans un cadre joli -->
+  <div *ngIf="oeuvreSelectionnee" class="details-panel">
+    <h2>Détails de l'œuvre</h2>
+    <img [src]="oeuvreSelectionnee.image" alt="{{ oeuvreSelectionnee.titre }}" class="oeuvre-image-large" />
+    <p><strong>Titre :</strong> {{ oeuvreSelectionnee.titre }}</p>
+    <p><strong>Description :</strong> {{ oeuvreSelectionnee.description }}</p>
+    <p><strong>Type :</strong> {{ oeuvreSelectionnee.type }}</p>
+    <p><strong>Prix :</strong> {{ oeuvreSelectionnee.prix }} DT</p>
+    <button class="btn btn-danger" (click)="oeuvreSelectionnee = null">
+      X Fermer
+    </button>
+  </div>
+</div>
+
+<a routerLink="/panier" class="btn-fab" title="Consulter le panier">
+  <i class="fas fa-shopping-cart">🛒</i>
+</a>

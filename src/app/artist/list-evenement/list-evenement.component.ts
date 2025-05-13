@@ -29,7 +29,7 @@ constructor(private service: EvenementService, private router: Router) {}
     );
   }
  editEvenement(id: number) {
-    this.router.navigate([`/artist/update-evenement/${id}`]);
+    this.router.navigate([`/update-evenement/${id}`]);
   }
     deleteEvenement(id: number) {
     const confirmDelete = window.confirm('Êtes-vous sûr de vouloir supprimer cet événement ?');

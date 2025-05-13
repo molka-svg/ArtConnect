@@ -51,7 +51,6 @@ exports.getAllEvenements = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération des événements', error: err.message });
   }
 };
-
 exports.getEvenementById = (req, res) => {
   const { id } = req.params;
   const query = `SELECT * FROM evenement WHERE id = ?`;

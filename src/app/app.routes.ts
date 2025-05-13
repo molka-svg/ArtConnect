@@ -12,6 +12,7 @@ import { AddEvenementComponent } from './artist/add-evenement/add-evenement.comp
 import { EditEvenementComponent } from './artist/edit-evenement/edit-evenement.component';
 import { ListEvenementComponent } from './artist/list-evenement/list-evenement.component';
 import { EventsComponent } from './pages/events/events.component';
+import { ArtworksComponent } from './pages/artworks/artworks.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent },
@@ -22,11 +23,11 @@ export const routes: Routes = [
   { path: 'my-auctions', component: MyAuctionsComponent },
   { path: 'edit-artwork/:id', component: EditArtworkComponent },
   { path: 'panier', component: PanierComponent }, 
-  { path: 'update-evenement', component: EditEvenementComponent }, 
+  { path: 'update-evenement/:id', component: EditEvenementComponent }, 
   { path: 'artiste/mes-evenements', component: ListEvenementComponent}, 
   {path:'artiste/add-evenement',component:AddEvenementComponent},
   {path:'events',component:EventsComponent},
-
+{path:'artworks',component:ArtworksComponent},
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
