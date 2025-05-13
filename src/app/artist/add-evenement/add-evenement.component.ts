@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, NgModel } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-add-evenement',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,RouterLink],
   templateUrl: './add-evenement.component.html',
   styleUrl: './add-evenement.component.css'
 })

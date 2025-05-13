@@ -22,9 +22,19 @@ export class AuthService {
   }
 }
 
-  isArtist(): boolean {
-    return this.getRole() === 'artiste';
+isArtist(): boolean {
+  const role = this.getRole();
+  console.log('Role from token:', role);
+
+  if (role === 'artiste') {
+    console.log('true');
+    return true;
+  } else {
+    console.log('false');
+    return false;
   }
+}
+
   isAdmin(): boolean {
     return this.getRole() === 'admin';
   }

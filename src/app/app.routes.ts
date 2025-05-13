@@ -11,6 +11,7 @@ import { PanierComponent } from './pages/panier/panier.component'; // Importer P
 import { AddEvenementComponent } from './artist/add-evenement/add-evenement.component';
 import { EditEvenementComponent } from './artist/edit-evenement/edit-evenement.component';
 import { ListEvenementComponent } from './artist/list-evenement/list-evenement.component';
+import { EventsComponent } from './pages/events/events.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent },
@@ -24,6 +25,8 @@ export const routes: Routes = [
   { path: 'update-evenement', component: EditEvenementComponent }, 
   { path: 'artiste/mes-evenements', component: ListEvenementComponent}, 
   {path:'artiste/add-evenement',component:AddEvenementComponent},
+  {path:'events',component:EventsComponent},
+
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
