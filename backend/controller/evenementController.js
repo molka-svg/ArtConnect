@@ -44,7 +44,6 @@ exports.getAllEvenements = async (req, res) => {
       SELECT e.*, CONCAT(u.prenom, ' ', u.nom) AS organisateur_nom
       FROM evenement e
       LEFT JOIN users u ON e.organisateur_id = u.userid
-      WHERE u.role = 'admin' OR u.role IS NULL
     `;
     const [rows] = await db.promise().query(query);
     res.json(rows);
