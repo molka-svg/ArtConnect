@@ -10,7 +10,7 @@ exports.ajouter = async (data) => {
     data.lieu,
     data.prix_ticket,
     data.nombre_places,
-    data.nombre_places, // places_disponibles initiales = nombre_places
+    data.nombre_places, 
     data.organisateur_id
   ];
 
@@ -38,7 +38,7 @@ exports.getByOrganisateur = async (organisateur_id) => {
   return rows;
 };
 
-exports.getAll = async () => {
+exports.getAllEvenements = async () => {
   const [rows] = await db.promise().query('SELECT * FROM evenement');
   return rows;
 };
