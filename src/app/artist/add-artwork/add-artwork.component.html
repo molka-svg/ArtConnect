@@ -1,13 +1,30 @@
 <div class="all">
-
-
-<H3>ADD NEW ARTWORK!</H3>
-<form (ngSubmit)="onSubmit()">
-    <input type="text" placeholder="Titre" [(ngModel)]="artwork.titre" name="titre" required />
-    <textarea placeholder="Description" [(ngModel)]="artwork.description" name="description"></textarea>
-    <input type="number" placeholder="Prix" [(ngModel)]="artwork.prix" name="prix" />
-    <input type="text" placeholder="Type" [(ngModel)]="artwork.type" name="type" />
-    <input type="text" placeholder="Image URL" [(ngModel)]="artwork.image" name="image" />
-    <button type="submit">Ajouter</button>
-  </form>
-</div>  
+  <div class="form-container">
+    <h3>Add New Artwork</h3>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        Titre:
+        <input type="text" placeholder="Title" [(ngModel)]="artwork.titre" name="titre" required />
+      </div>
+      <div class="form-group">
+        Description:
+        <textarea placeholder="Description" [(ngModel)]="artwork.description" name="description" rows="4"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group half-width">
+          price:
+          <input type="number" placeholder="Price" [(ngModel)]="artwork.prix" name="prix" />
+        </div>
+        <div class="form-group half-width">
+          type:
+          <input type="text" placeholder="Type" [(ngModel)]="artwork.type" name="type" />
+        </div>
+      </div>
+      <div class="form-group">
+        ImageUrl:
+        <input type="text" placeholder="Image URL" [(ngModel)]="artwork.image" name="image" />
+      </div>
+      <button type="submit" class="submit-btn">Add Artwork</button>
+    </form>
+  </div>
+</div>

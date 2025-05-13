@@ -22,11 +22,10 @@ export class LoginComponent {
       next: (res: any) => {
         alert('✅ Connexion réussie !');
   
-        // 🔐 Sauvegarde du token dans le localStorage
         localStorage.setItem('token', res.token);
   
         if (res.user.role === 'artiste') {
-          this.router.navigate(['/my-auctions']);
+          this.router.navigate(['mes-oeuvres']);
         } else {
           this.router.navigate(['/home']);
         }

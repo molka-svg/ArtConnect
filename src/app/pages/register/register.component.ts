@@ -2,10 +2,11 @@ import { Component, NgModule } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { FormsModule } from '@angular/forms';
 import { RouterLink,Router } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule,RouterLink],
+  imports: [FormsModule,RouterLink,NgIf,NgFor],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -40,7 +41,7 @@ export class RegisterComponent {
       
       this.ageValid = age >= 16;
       if (!this.ageValid) {
-        this.errorMessage = 'Vous devez avoir au moins 16 ans pour vous inscrire';
+        this.errorMessage = 'Vous devez avoir au moins 16 ans et au maximum 80 ans pour vous inscrire';
       } else {
         this.errorMessage = '';
       }
@@ -76,7 +77,6 @@ export class RegisterComponent {
       }
     });
   }
-
   private isPasswordValid(password: string): boolean {
   return true;
     
