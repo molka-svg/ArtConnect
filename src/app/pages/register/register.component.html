@@ -1,46 +1,47 @@
+<!-- register.component.html -->
 <div class="all">
-  <div class="login-container">
+  <div class="register-container">
     <div class="logo"></div>
-    <div class="login-form">
+    <form class="register-form" (submit)="register(); $event.preventDefault()">
       <h2>Inscription</h2>
-
-      <form (ngSubmit)="register()">
-        <label>Nom:</label>
-        <input type="text" [(ngModel)]="user.nom" name="nom" required><br>
-
-        <label>Prénom:</label>
-        <input type="text" [(ngModel)]="user.prenom" name="prenom" required><br>
-
-        <label>Téléphone:</label>
-        <input type="text" [(ngModel)]="user.telephone" name="telephone" required><br>
-
-        <label>Email:</label>
-        <input type="email" [(ngModel)]="user.mail" name="mail" required><br>
-
-        <label>Mot de passe:</label>
-        <input type="password" [(ngModel)]="user.password" name="password" required><br>
-        
-        <label>Confirmer le mot de passe:</label>
-        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required><br>
-        
-
-        <label>Rôle:</label>
-        <select [(ngModel)]="user.role" name="role">
-          <option value="user">Utilisateur</option>
-          <option value="artiste">Artiste</option>
-        </select><br>
-
-        <label>Genre:</label>
-        <select [(ngModel)]="user.gender" name="gender">
-          <option value="female">Femme</option>
-          <option value="male">Homme</option>
-        </select><br>
-
-        <label>Date de naissance:</label>
-        <input type="date" [(ngModel)]="user.date_naissance" name="date_naissance" required><br>
-
-        <button type="submit">S'inscrire</button>
-      </form>
-    </div>
+      
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" [(ngModel)]="user.nom" name="nom" required placeholder="Votre nom">
+      
+      <label for="prenom">Prénom</label>
+      <input type="text" id="prenom" [(ngModel)]="user.prenom" name="prenom" required placeholder="Votre prénom">
+      
+      <label for="gender">Genre</label>
+      <select id="gender" [(ngModel)]="user.gender" name="gender" required>
+        <option value="female">Femme</option>
+        <option value="male">Homme</option>
+        <option value="other">Autre</option>
+      </select>
+      
+      <label for="date_naissance">Date de naissance</label>
+      <input type="date" id="date_naissance" [(ngModel)]="user.date_naissance" name="date_naissance" 
+             required (change)="checkAge()">
+      <div class="error-message" *ngIf="!ageValid">{{errorMessage}}</div>
+      
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" [(ngModel)]="user.telephone" name="telephone" placeholder="Numéro de téléphone">
+      
+      <label for="mail">Email</label>
+      <input type="email" id="mail" [(ngModel)]="user.mail" name="mail" required placeholder="Votre email">
+      
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" required 
+             placeholder="Créez un mot de passe">
+      
+      <label for="confirmPassword">Confirmez le mot de passe</label>
+      <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required 
+             placeholder="Confirmez votre mot de passe">
+      
+      <div class="error-message" *ngIf="errorMessage && ageValid">{{errorMessage}}</div>
+      
+      <button type="submit">S'inscrire</button>
+      
+      <a routerLink="/login" class="link">Déjà inscrit? Connectez-vous ici</a>
+    </form>
   </div>
 </div>

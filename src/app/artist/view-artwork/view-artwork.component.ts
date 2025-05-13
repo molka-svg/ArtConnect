@@ -1,12 +1,12 @@
 import { Component,OnInit } from '@angular/core';
 import { ArtworkService } from '../../services/artwork.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-view-artwork',
   standalone: true,
-  imports: [NgIf,NgFor],
+  imports: [NgIf,NgFor,RouterLink],
   templateUrl: './view-artwork.component.html',
   styleUrl: './view-artwork.component.css'
 })

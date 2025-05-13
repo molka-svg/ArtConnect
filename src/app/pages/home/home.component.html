@@ -1,5 +1,4 @@
 <div class="container">
-  <!-- Sidebar pour les filtres -->
   <aside class="sidebar">
     <h3>Filtres</h3>
     <label>Nom de l'œuvre :</label>
@@ -24,26 +23,36 @@
       <option value="photographie">Photographie</option>
     </select>
     <label>Prix maximum :</label>
-    <input type="number" [(ngModel)]="prixMax" (input)="appliquerFiltres()" placeholder="Prix max" />
+    <input
+      type="number"
+      [(ngModel)]="prixMax"
+      (input)="appliquerFiltres()"
+      placeholder="Prix max"
+    />
   </aside>
 
-  <!-- Liste des œuvres -->
   <div class="oeuvres-grid">
     <div *ngFor="let oeuvre of oeuvresFiltrees" class="oeuvre-card">
       <img [src]="oeuvre.image" alt="{{ oeuvre.titre }}" class="oeuvre-image" />
       <div class="oeuvre-info">
         <h3>{{ oeuvre.titre }}</h3>
-        <p class="price">{{ oeuvre.prix }} €</p>
+        <p class="artiste">{{ oeuvre.artiste }}</p>
+        <p class="type">{{ oeuvre.type }}</p>
+        <p class="price"><i class="fas fa-coins"></i> {{ oeuvre.prix }} DT</p>
         <div class="actions">
-          <button class="btn btn-add" (click)="ajouterAuPanier(oeuvre)">Ajouter au panier</button>
-          <button class="btn btn-details" (click)="voirDetails(oeuvre)">Détails</button>
+          <button class="btn btn-add" (click)="ajouterAuPanier(oeuvre)">
+            <i class="fas fa-cart-plus icon-sm"></i> Ajouter
+          </button>
+          <button class="btn btn-details" (click)="voirDetails(oeuvre)">
+            <i class="fas fa-info-circle icon-sm"></i> Détails
+          </button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Bouton pour consulter le panier -->
-<div class="panier-action">
-  <a routerLink="/panier" class="btn btn-panier">Consulter le panier</a>
-</div>
+<a routerLink="/panier" class="btn-fab" title="Consulter le panier">
+  <i class="fas fa-shopping-cart">🛒</i>
+</a>
+

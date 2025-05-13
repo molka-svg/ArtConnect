@@ -1,6 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { EvenementService } from '../../services/evenement.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 
 
@@ -8,7 +8,7 @@ import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-list-evenement',
   standalone: true,
-  imports: [NgIf,NgFor],
+  imports: [NgIf,NgFor,RouterLink],
   templateUrl: './list-evenement.component.html',
   styleUrl: './list-evenement.component.css'
 })

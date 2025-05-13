@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { AuthService } from './services/auth.service';
-
-
 @Component({
   selector: 'app-root',
   standalone: true,
