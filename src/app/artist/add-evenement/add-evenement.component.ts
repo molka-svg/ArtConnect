@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, NgModel } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-add-evenement',
@@ -16,22 +17,25 @@ export class AddEvenementComponent {
     description: '',
     date_evt: '',
     heure: '',
+    type: '',
+    duree: 0,
     lieu: '',
     prix_ticket: 0,
-    nombre_places: 0,
+    nombre_places: 0
   };
 
-  constructor(private evenementService: EvenementService, private router: Router) {}
+  constructor(
+    private evenementService: EvenementService,
+    private router: Router
+  ) {}
 
   onSubmit() {
     this.evenementService.ajouterEvenement(this.evenement).subscribe({
-      next: (res) => {
+      next: res => {
         alert('Événement ajouté avec succès !');
-        this.router.navigate(['/artist/list-evenement']); 
+        this.router.navigate(['/artiste/mes-evenements']);
       },
-      error: (err) => {
-        console.error('Erreur lors de l\'ajout de l\'événement:', err);
-      }
+      error: err => console.error(err)
     });
   }
 }

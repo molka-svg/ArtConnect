@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-//import jwt_decode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,20 +9,19 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
-  getRole(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
+ getRole(): string | null {
+  const token = this.getToken();
+  if (!token) return null;
 
-   /* try {
-     // const decoded: any = jwt_decode(token);
-      return decoded.role; 
-    } catch (error) {
-      console.error('Erreur de décodage du token', error);
-      return null;
-    }
-      */
-     return null;
+  try {
+    const decoded: any = jwtDecode(token); 
+    return decoded.role;
+  } catch (error) {
+    console.error('Erreur de décodage du token', error);
+    return null;
   }
+}
+
   isArtist(): boolean {
     return this.getRole() === 'artiste';
   }
@@ -35,5 +34,16 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
   }
-    
+     getUserId(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded: any = jwtDecode(token); 
+      return decoded.id; 
+    } catch (error) {
+      console.error('Erreur de décodage du token', error);
+      return null;
+    }
+  }
 }

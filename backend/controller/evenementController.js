@@ -1,27 +1,30 @@
 const db = require('../config/db');
 const Evenement = require('../model/evenementModel');
-
 exports.ajouterEvenement = async (req, res) => {
   try {
-    const { titre, description, date, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
-    const organisateur_id = req.user.userid;
-    const places_disponibles = nombre_places;
-    const id = await Evenement.ajouter({
+    const { titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
+    const organisateur_id = req.user.userid; 
+    
+    const id = await Evenement.ajouter({ 
       titre,
       description,
-      date,
+      date_evt, 
       heure,
       type,
       duree,
       lieu,
       prix_ticket,
       nombre_places,
-      places_disponibles,
+      places_disponibles: nombre_places, // initialisation
       organisateur_id
     });
-    res.status(201).json({ message: 'Événement ajouté avec succès', id });
+    
+    res.status(201).json({ message: 'Événement créé avec succès', id });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur lors de l’ajout', error: err.message });
+    res.status(500).json({ 
+      message: 'Erreur lors de la création',
+      error: err.message 
+    });
   }
 };
 

@@ -1,24 +1,28 @@
 const db = require('../config/db');
+exports.ajouter = async (data) => {
+  const params = [
+    data.titre,
+    data.description,
+    data.date_evt,
+    data.heure,
+    data.type,
+    data.duree,
+    data.lieu,
+    data.prix_ticket,
+    data.nombre_places,
+    data.nombre_places, // places_disponibles initiales = nombre_places
+    data.organisateur_id
+  ];
 
-exports.ajouter = async ({ titre, description, date, heure, type, duree, lieu, prix_ticket, nombre_places, places_disponibles, organisateur_id }) => {
+  console.log('Paramètres SQL:', params);
+
   const sql = `
     INSERT INTO evenement 
-    (nom, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places, places_disponibles, organisateur_id)
+    (titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places, places_disponibles, organisateur_id)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
-  const [result] = await db.promise().execute(sql, [
-    titre,
-    description,
-    date,
-    heure,
-    type,
-    duree,
-    lieu,
-    prix_ticket,
-    nombre_places,
-    places_disponibles,
-    organisateur_id
-  ]);
+  
+  const [result] = await db.promise().execute(sql, params);
   return result.insertId;
 };
 
@@ -50,7 +54,7 @@ exports.getById = async (id) => {
 exports.modifier = async (id, { titre, description, date, heure, type, duree, lieu, prix_ticket, nombre_places, places_disponibles }) => {
   await db.promise().query(
     `UPDATE evenement 
-     SET nom = ?, description = ?, date_evt = ?, heure = ?, type = ?, duree = ?, lieu = ?, 
+     SET titre = ?, description = ?, date_evt = ?, heure = ?, type = ?, duree = ?, lieu = ?, 
          prix_ticket = ?, nombre_places = ?, places_disponibles = ?
      WHERE id = ?`,
     [titre, description, date, heure, type, duree, lieu, prix_ticket, nombre_places, places_disponibles, id]

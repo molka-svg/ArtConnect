@@ -28,9 +28,8 @@ const login = (req, res) => {
       const token = jwt.sign(
         { id: user.userid, role: user.role },
         process.env.JWT_SECRET,
-        { expiresIn: '7d' } // reste connecté 7 jours
+        { expiresIn: '7d' } 
       );
-
       res.json({
         message: 'Connexion réussie',
         token,
