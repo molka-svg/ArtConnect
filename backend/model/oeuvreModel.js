@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const oeuvreController = require('../controller/oeuvreController');
 
 exports.ajouter = async ({ titre, description, prix, type, image, artiste_id }) => {
   const sql = `

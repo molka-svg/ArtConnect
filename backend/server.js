@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 const userRoutes = require('./routes/userRoutes');
 const oeuvreRoutes = require('./routes/oeuvreRoutes');
 const evenementRoutes = require('./routes/evenementRoutes');
+const createAdminIfNotExists = require('./model/createAdmin'); // Correct import
 
 app.use('/api/users', userRoutes);
 app.use('/api/oeuvres', oeuvreRoutes);
@@ -21,6 +22,13 @@ app.get('/', (req, res) => {
   res.send('API fonctionne 😎');
 });
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Serveur démarré sur http://localhost:${port}`);
+  
+  try {
+    await createAdminIfNotExists(); 
+    console.log('✅ Admin setup completed');
+  } catch (err) {
+    console.error('❌ Error during admin setup:', err.message);
+  }
 });

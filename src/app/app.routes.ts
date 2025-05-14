@@ -22,12 +22,9 @@ import { EvenementsEnAttenteComponent } from './admin/evenements-en-attente/even
 export const routes: Routes = [
   
       { path: '', component: OeuvresEnAttenteComponent },
-      { path: 'oeuvres-en-attente', component: OeuvresEnAttenteComponent },
-      { path: 'evenements-en-attente', component: EvenementsEnAttenteComponent },
-    
-  
+      { path: 'admin/oeuvres-en-attente', component: OeuvresEnAttenteComponent },
+      { path: 'admin/evenements-en-attente', component: EvenementsEnAttenteComponent },
   { path: 'mentions', component: MentionsLegalesComponent },
-
   { path: 'login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },

@@ -24,7 +24,7 @@ export class AddArtworkComponent {
   }
   onSubmit() {
     this.artworkService.addArtwork(this.artwork).subscribe({
-      next: res => {alert('oeuvre ajouté avec succès !')
+      next: res => {alert('Votre œuvre a été ajoutée avec succès. Elle sera publiée après l\'approbation de l\'administrateur.')
         this.router.navigate(['/mes-oeuvres'])
       },
       error: err => console.error(err)

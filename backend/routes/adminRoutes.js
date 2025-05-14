@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { checkAdmin } = require('../middleware/authMiddleware');
-const oeuvreController = require('../controllers/oeuvreController');
-const evenementController = require('../controllers/evenementController');
+const oeuvreController = require('../controller/oeuvreController');
+const evenementController = require('../controller/evenementController');
 
 router.get('/oeuvres/en-attente', checkAdmin, oeuvreController.getOeuvresEnAttente);
 router.put('/oeuvres/:id/approuver', checkAdmin, oeuvreController.approuverOeuvre);

@@ -1,12 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken } = require('../middleWare/authMiddleWare');
+const { verifyToken } = require('../middleware/authMiddleware'); 
 const oeuvreController = require('../controller/oeuvreController'); 
 
 router.post('/add', verifyToken, oeuvreController.ajouterOeuvre);
 router.get('/mes-oeuvres', verifyToken, oeuvreController.getOeuvresByArtiste); 
 router.delete('/delete/:id', verifyToken, oeuvreController.supprimerOeuvre);
 router.get('/edit-artwork/:id', oeuvreController.getOeuvreById);
+router.put('/modifier/:id', verifyToken, oeuvreController.modifierOeuvre);
 router.get('/all', oeuvreController.getAllOeuvres);
+
+// Admin routes
+router.get('/en-attente', verifyToken, oeuvreController.getOeuvresEnAttente);
+router.put('/approuver/:id', verifyToken, oeuvreController.approuverOeuvre);
+router.put('/rejeter/:id', verifyToken, oeuvreController.rejeterOeuvre);
 
 module.exports = router;

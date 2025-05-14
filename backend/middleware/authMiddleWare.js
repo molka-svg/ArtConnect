@@ -48,4 +48,4 @@ function checkAdmin(req, res, next) {
   res.status(403).json({ message: 'Accès réservé aux administrateurs' });
 }
 
-module.exports = { checkAdmin };
+module.exports = { checkAdmin,verifyToken };

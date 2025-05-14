@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken } = require('../middleWare/authMiddleWare');
+const { verifyToken } = require('../middleware/authMiddleware');  // Assurez-vous que le chemin correspond au fichier renommé
 const evenementController = require('../controller/evenementController');
 
 router.post('/add', verifyToken, evenementController.ajouterEvenement);
