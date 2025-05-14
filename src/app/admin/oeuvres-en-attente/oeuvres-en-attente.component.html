@@ -1,1 +1,30 @@
-<p>oeuvres-en-attente works!</p>
+<div class="container mt-5">
+  <h2 class="mb-4">Œuvres en attente d'approbation</h2>
+  
+  <div *ngIf="oeuvresEnAttente.length === 0" class="alert alert-info">
+    Aucune œuvre en attente d'approbation pour le moment.
+  </div>
+
+  <div class="row">
+    <div *ngFor="let oeuvre of oeuvresEnAttente" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="oeuvre.image" class="card-img-top" [alt]="oeuvre.titre" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{ oeuvre.titre }}</h5>
+          <p class="card-text">{{ oeuvre.description }}</p>
+          <p><strong>Artiste:</strong> {{ oeuvre.artiste_nom }}</p>
+          <p><strong>Prix:</strong> {{ oeuvre.prix }} €</p>
+          <p><strong>Type:</strong> {{ oeuvre.type }}</p>
+        </div>
+        <div class="card-footer bg-white">
+          <button class="btn btn-success me-2" (click)="approuverOeuvre(oeuvre.oeuvre_id)">
+            <i class="fas fa-check"></i> Approuver
+          </button>
+          <button class="btn btn-danger" (click)="rejeterOeuvre(oeuvre.oeuvre_id)">
+            <i class="fas fa-times"></i> Rejeter
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -26,7 +26,11 @@ export class LoginComponent {
   
         if (res.user.role === 'artiste') {
           this.router.navigate(['mes-oeuvres']);
-        } else {
+        } else if(res.user.role === 'admin'){
+          this.router.navigate(['admin/oeuvres-en-attente']);
+
+        }
+        else {
           this.router.navigate(['/home']);
         }
   

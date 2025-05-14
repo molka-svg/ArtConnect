@@ -4,10 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { AuthService } from './services/auth.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,RouterLink,CommonModule,HttpClientModule,RouterModule,NgIf,NgFor],
+  imports: [RouterOutlet,RouterLink,CommonModule,HttpClientModule,RouterModule,NgIf,NgFor
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
