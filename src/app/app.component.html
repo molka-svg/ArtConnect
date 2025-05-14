@@ -1,15 +1,15 @@
-<div class="container-fluid px-0">
+<div class="container-fluid px-0 d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg" style="background-color: rgba(33, 37, 41, 0.95) !important;">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" routerLink="home" style="font-family: 'Playfair Display', serif;">
         <i class="bi bi-palette-fill fs-3 me-2 text-primary"></i>
         <span class="fs-4 fw-bold text-gradient">ArtGallery</span>
       </a>
-        <a class="navbar-brand d-flex align-items-center" routerLink="artworks" style="font-family: 'Playfair Display', serif;">
+      <a class="navbar-brand d-flex align-items-center" routerLink="artworks" style="font-family: 'Playfair Display', serif;">
         <i class="bi bi-palette-fill fs-3 me-2 text-primary"></i>
         <span class="fs-4 fw-bold text-gradient">Les oeuvres</span>
       </a>
-  <a class="navbar-brand d-flex align-items-center" routerLink="events" style="font-family: 'Playfair Display', serif;">
+      <a class="navbar-brand d-flex align-items-center" routerLink="events" style="font-family: 'Playfair Display', serif;">
         <i class="bi bi-palette-fill fs-3 me-2 text-primary"></i>
         <span class="fs-4 fw-bold text-gradient">Les evenements</span>
       </a>
@@ -50,7 +50,71 @@
     </div>
   </nav>
 
-  <div class="content">
+  <div class="content flex-grow-1">
     <router-outlet></router-outlet>
   </div>
-</div>
+<footer class="bg-dark text-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <h5 class="text-uppercase fw-bold mb-3" style="color: #e9c46a;">ArtWork</h5>
+          <p class="text-muted small">
+            Galerie d'art contemporain en ligne. Découvrez des œuvres uniques et soutenez les artistes du monde entier.
+          </p>
+          <div class="mt-3">
+            <p class="text-muted small mb-0">Développé par:</p>
+            <p class="small" style="color: #f8f9fa;">Ferchichi Molka & Nefaa Med Taher</p>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6 class="text-uppercase fw-bold mb-3" style="color: #e9c46a;">Navigation</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a routerLink="home" class="text-decoration-none" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'">Accueil</a></li>
+            <li class="mb-2"><a routerLink="artworks" class="text-decoration-none" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'">Œuvres</a></li>
+            <li class="mb-2"><a routerLink="sculptures" class="text-decoration-none" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'">Sculptures</a></li>
+            <li class="mb-2"><a routerLink="artists" class="text-decoration-none" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'">Artistes</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h6 class="text-uppercase fw-bold mb-3" style="color: #e9c46a;">Contact</h6>
+          <ul class="list-unstyled text-muted small">
+            <li class="mb-2"><i class="fas fa-envelope me-2" style="color: #e9c46a;"></i> contactsymbook.com</li>
+            <li class="mb-2"><i class="fas fa-phone me-2" style="color: #e9c46a;"></i> +123 456 789</li>
+            <li><i class="fas fa-map-marker-alt me-2" style="color: #e9c46a;"></i> Paris, France</li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <h6 class="text-uppercase fw-bold mb-3" style="color: #e9c46a;">Suivez-nous</h6>
+          <div class="d-flex gap-3 mb-3">
+            <a href="#" class="fs-5" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="fs-5" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="fs-5" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="fs-5" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <div class="mt-4">
+            <p class="text-muted small mb-2">Abonnez-vous à notre newsletter</p>
+            <div class="input-group">
+              <input type="email" class="form-control form-control-sm bg-dark text-light border-secondary" placeholder="Votre email">
+              <button class="btn btn-sm" type="button" style="background-color: #e9c46a; color: #212529;">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <hr class="border-secondary my-4" />
+      
+      <div class="row">
+        <div class="col-md-6 text-center text-md-start text-muted small">
+          © 2025 ArtWork. Tous droits réservés.
+        </div>
+        <div class="col-md-6 text-center text-md-end text-muted small">
+          <span class="mx-2">•</span>
+          <a routerLink="mentions" class="text-decoration-none" style="color: #adb5bd; transition: color 0.3s;" onmouseover="this.style.color='#e9c46a'" onmouseout="this.style.color='#adb5bd'">Mentions légales</a>
+          <span class="mx-2">•</span>
+        </div>
+      </div>
+    </div>
+</footer>

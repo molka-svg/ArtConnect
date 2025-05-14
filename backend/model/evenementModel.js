@@ -1,29 +1,33 @@
 const db = require('../config/db');
-exports.ajouter = async (data) => {
-  const params = [
-    data.titre,
-    data.description,
-    data.date_evt,
-    data.heure,
-    data.type,
-    data.duree,
-    data.lieu,
-    data.prix_ticket,
-    data.nombre_places,
-    data.nombre_places, 
-    data.organisateur_id
-  ];
-
-  console.log('Paramètres SQL:', params);
-
-  const sql = `
-    INSERT INTO evenement 
-    (titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places, places_disponibles, organisateur_id)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-  
-  const [result] = await db.promise().execute(sql, params);
-  return result.insertId;
+exports.ajouterEvenement = async (req, res) => {
+  try {
+    const { titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
+    const organisateur_id = req.user.userid; 
+    
+    const id = await Evenement.ajouter({ 
+      titre,
+      description,
+      date_evt, 
+      heure,
+      type,
+      duree,
+      lieu,
+      prix_ticket,
+      nombre_places,
+      places_disponibles: nombre_places,
+      organisateur_id
+    });
+    
+    res.status(201).json({ 
+      message: 'Votre événement est en cours de considération. Il sera disponible sur notre site après approbation par l\'administrateur.', 
+      id 
+    });
+  } catch (err) {
+    res.status(500).json({ 
+      message: 'Erreur lors de la création',
+      error: err.message 
+    });
+  }
 };
 
 exports.supprimer = async (id) => {

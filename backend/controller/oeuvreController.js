@@ -1,12 +1,14 @@
 const db = require('../config/db');
 const Oeuvre = require('../model/oeuvreModel');
-
 exports.ajouterOeuvre = async (req, res) => {
   try {
     const { titre, description, prix, type, image } = req.body;
     const artiste_id = req.user.userid;
     const id = await Oeuvre.ajouter({ titre, description, prix, type, image, artiste_id });
-    res.status(201).json({ message: 'Oeuvre ajoutée', id });
+    res.status(201).json({ 
+      message: 'Votre œuvre est en cours de considération. Elle sera disponible sur notre site après approbation par l\'administrateur.', 
+      id 
+    });
   } catch (err) {
     res.status(500).json({ message: 'Erreur lors de l’ajout', error: err.message });
   }
@@ -63,14 +65,60 @@ exports.modifierOeuvre = async (req, res) => {
   }
 };
 
+exports.getOeuvresEnAttente = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès non autorisé' });
+    }
+    
+    const [rows] = await db.promise().query(
+      'SELECT o.*, CONCAT(u.prenom, " ", u.nom) AS artiste_nom FROM oeuvres o JOIN users u ON o.artiste_id = u.userid WHERE o.statut = "en_attente"'
+    );
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.approuverOeuvre = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès non autorisé' });
+    }
+    const { id } = req.params;
+    await db.promise().query(
+      'UPDATE oeuvres SET statut = "approuve" WHERE oeuvre_id = ?',
+      [id]
+    );
+    res.json({ message: 'Œuvre approuvée avec succès' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+exports.rejeterOeuvre = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès non autorisé' });
+    }
+    const { id } = req.params;
+    await db.promise().query(
+      'UPDATE oeuvres SET statut = "rejete" WHERE oeuvre_id = ?',
+      [id]
+    );
+    res.json({ message: 'Œuvre rejetée avec succès' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
 exports.getAllOeuvres = async (req, res) => {
   try {
     const query = `
-  SELECT o.*, CONCAT(u.prenom, ' ', u.nom) AS artiste_nom
-  FROM oeuvres o
-  LEFT JOIN users u ON o.artiste_id = u.userid
-  WHERE u.role = 'artiste' or u.role=NULL
-`;
+      SELECT o.*, CONCAT(u.prenom, ' ', u.nom) AS artiste_nom
+      FROM oeuvres o
+      LEFT JOIN users u ON o.artiste_id = u.userid
+      WHERE o.statut = 'approuve'
+    `;
     const [rows] = await db.promise().query(query);
     res.json(rows);
   } catch (err) {

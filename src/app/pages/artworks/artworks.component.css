@@ -1,11 +1,9 @@
-/* Container général */
 .container {
   display: flex;
   padding: 2rem;
   gap: 2rem;
 }
 
-/* Sidebar */
 .sidebar {
   width: 250px;
   background: #f9f9f9;
@@ -183,7 +181,6 @@
   border-radius: 8px;
   cursor: pointer;
 }
-/* Style pour la section Détails */
 .details-panel {
   margin-top: 20px;
   padding: 20px;

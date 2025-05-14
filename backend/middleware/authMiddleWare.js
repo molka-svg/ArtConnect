@@ -41,3 +41,11 @@ module.exports = {
   verifyToken,
   requireRole
 };
+function checkAdmin(req, res, next) {
+  if (req.user && req.user.role === 'admin') {
+    return next();
+  }
+  res.status(403).json({ message: 'Accès réservé aux administrateurs' });
+}
+
+module.exports = { checkAdmin };

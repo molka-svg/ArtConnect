@@ -13,7 +13,21 @@ import { EditEvenementComponent } from './artist/edit-evenement/edit-evenement.c
 import { ListEvenementComponent } from './artist/list-evenement/list-evenement.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ArtworksComponent } from './pages/artworks/artworks.component';
+import { ConditionsDUtilisationComponent } from './rules/conditions-d-utilisation/conditions-d-utilisation.component';
+import { MentionsLegalesComponent } from './rules/mentions-legales/mentions-legales.component';
+import { OeuvresEnAttenteComponent } from './admin/oeuvres-en-attente/oeuvres-en-attente.component';
+import { EvenementsEnAttenteComponent } from './admin/evenements-en-attente/evenements-en-attente.component';
+
+
 export const routes: Routes = [
+  
+      { path: '', component: OeuvresEnAttenteComponent },
+      { path: 'oeuvres-en-attente', component: OeuvresEnAttenteComponent },
+      { path: 'evenements-en-attente', component: EvenementsEnAttenteComponent },
+    
+  
+  { path: 'mentions', component: MentionsLegalesComponent },
+
   { path: 'login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },

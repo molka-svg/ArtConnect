@@ -15,7 +15,7 @@ exports.ajouterEvenement = async (req, res) => {
       lieu,
       prix_ticket,
       nombre_places,
-      places_disponibles: nombre_places, // initialisation
+      places_disponibles: nombre_places, 
       organisateur_id
     });
     
@@ -37,6 +37,54 @@ exports.getEvenementsByOrganisateur = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération', error: err.message });
   }
 };
+exports.getEvenementsEnAttente = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès non autorisé' });
+    }
+    
+    const [rows] = await db.promise().query(
+      'SELECT e.*, CONCAT(u.prenom, " ", u.nom) AS organisateur_nom FROM evenement e JOIN users u ON e.organisateur_id = u.userid WHERE e.statut = "en_attente"'
+    );
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.approuverEvenement = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès non autorisé' });
+    }
+    
+    const { id } = req.params;
+    await db.promise().query(
+      'UPDATE evenement SET statut = "approuve" WHERE id = ?',
+      [id]
+    );
+    res.json({ message: 'Événement approuvé avec succès' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.rejeterEvenement = async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Accès non autorisé' });
+    }
+    
+    const { id } = req.params;
+    await db.promise().query(
+      'UPDATE evenement SET statut = "rejete" WHERE id = ?',
+      [id]
+    );
+    res.json({ message: 'Événement rejeté avec succès' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
 
 exports.getAllEvenements = async (req, res) => {
   try {
@@ -44,6 +92,7 @@ exports.getAllEvenements = async (req, res) => {
       SELECT e.*, CONCAT(u.prenom, ' ', u.nom) AS organisateur_nom
       FROM evenement e
       LEFT JOIN users u ON e.organisateur_id = u.userid
+      WHERE e.statut = 'approuve'
     `;
     const [rows] = await db.promise().query(query);
     res.json(rows);
