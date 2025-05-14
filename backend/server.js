@@ -12,12 +12,14 @@ app.use(bodyParser.json());
 const userRoutes = require('./routes/userRoutes');
 const oeuvreRoutes = require('./routes/oeuvreRoutes');
 const evenementRoutes = require('./routes/evenementRoutes');
-const createAdminIfNotExists = require('./model/createAdmin'); // Correct import
-
+const createAdminIfNotExists = require('./model/createAdmin');
+const admin=require('./routes/adminRoutes');
 app.use('/api/users', userRoutes);
 app.use('/api/oeuvres', oeuvreRoutes);
 app.use('/api/evenements', evenementRoutes);
+app.use('/api/admin', admin);
 
+app.use
 app.get('/', (req, res) => {
   res.send('API fonctionne 😎');
 });

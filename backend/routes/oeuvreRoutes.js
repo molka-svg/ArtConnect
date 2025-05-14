@@ -10,8 +10,7 @@ router.get('/edit-artwork/:id', oeuvreController.getOeuvreById);
 router.put('/modifier/:id', verifyToken, oeuvreController.modifierOeuvre);
 router.get('/all', oeuvreController.getAllOeuvres);
 
-// Admin routes
-router.get('/en-attente', verifyToken, oeuvreController.getOeuvresEnAttente);
+router.get('/oeuvres/en-attente', verifyToken, oeuvreController.getOeuvresEnAttente);
 router.put('/approuver/:id', verifyToken, oeuvreController.approuverOeuvre);
 router.put('/rejeter/:id', verifyToken, oeuvreController.rejeterOeuvre);
 

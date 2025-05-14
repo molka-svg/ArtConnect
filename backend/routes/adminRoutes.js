@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { checkAdmin } = require('../middleware/authMiddleware');
-const oeuvreController = require('../controller/oeuvreController');
-const evenementController = require('../controller/evenementController');
+const { verifyToken } = require('../middleware/authMiddleware'); 
+const oeuvreController = require('../controller/oeuvreController'); 
 
-router.get('/oeuvres/en-attente', checkAdmin, oeuvreController.getOeuvresEnAttente);
-router.put('/oeuvres/:id/approuver', checkAdmin, oeuvreController.approuverOeuvre);
-router.put('/oeuvres/:id/rejeter', checkAdmin, oeuvreController.rejeterOeuvre);
+router.post('/add', verifyToken, oeuvreController.ajouterOeuvre);
+router.get('/mes-oeuvres', verifyToken, oeuvreController.getOeuvresByArtiste); 
+router.delete('/delete/:id', verifyToken, oeuvreController.supprimerOeuvre);
+router.get('/edit-artwork/:id', oeuvreController.getOeuvreById);
+router.put('/modifier/:id', verifyToken, oeuvreController.modifierOeuvre);
+router.get('/all', oeuvreController.getAllOeuvres);
 
-router.get('/evenements/en-attente', checkAdmin, evenementController.getEvenementsEnAttente);
-router.put('/evenements/:id/approuver', checkAdmin, evenementController.approuverEvenement);
-router.put('/evenements/:id/rejeter', checkAdmin, evenementController.rejeterEvenement);
+router.get('/oeuvres/en-attente', verifyToken, oeuvreController.getOeuvresEnAttente);
+router.put('/oeuvres/approuver/:id', verifyToken, oeuvreController.approuverOeuvre);
+router.put('/oeuvres/rejeter/:id', verifyToken, oeuvreController.rejeterOeuvre);
 
 module.exports = router;
