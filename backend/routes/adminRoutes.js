@@ -9,7 +9,7 @@ router.delete('/delete/:id', verifyToken, oeuvreController.supprimerOeuvre);
 router.get('/edit-artwork/:id', oeuvreController.getOeuvreById);
 router.put('/modifier/:id', verifyToken, oeuvreController.modifierOeuvre);
 router.get('/all', oeuvreController.getAllOeuvres);
-
+ 
 router.get('/oeuvres/en-attente', verifyToken, oeuvreController.getOeuvresEnAttente);
 router.put('/oeuvres/approuver/:id', verifyToken, oeuvreController.approuverOeuvre);
 router.put('/oeuvres/rejeter/:id', verifyToken, oeuvreController.rejeterOeuvre);

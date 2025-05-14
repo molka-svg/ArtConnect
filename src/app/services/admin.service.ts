@@ -17,10 +17,10 @@ export class AdminService {
   }
 
   approuverOeuvre(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/oeuvres/${id}/approuver`, {});
+    return this.http.put(`${this.apiUrl}/oeuvres/approuver/${id}`, {});
   }
     rejeterOeuvre(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/oeuvres/${id}/rejeter`, {});
+    return this.http.put(`${this.apiUrl}/oeuvres/rejeter/${id}`, {});
   }
 
   approuverEvenement(id: number): Observable<any> {
