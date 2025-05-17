@@ -1,0 +1,33 @@
+<div class="checkout-container">
+  <h2>Confirmation de votre commande</h2>
+  <div *ngIf="panier.length === 0" class="empty-message">Aucun article à confirmer.</div>
+  <div class="panier-items">
+    <div *ngFor="let item of panier" class="panier-item">
+      <div class="item-details">
+        <h3>{{ item.titre }}</h3>
+        <p>Prix unitaire: {{ item.prix }} €</p>
+        <p>Quantité: {{ item.quantite }}</p>
+        <p>Sous-total: {{ item.prix * item.quantite }} €</p>
+      </div>
+    </div>
+  </div>
+  <h3 *ngIf="panier.length > 0">Total: {{ totalPrice }} €</h3>
+  <div class="payment-methods" *ngIf="panier.length > 0">
+    <h3>Choisir une méthode de paiement</h3>
+    <form>
+      <div class="form-group">
+        <label>
+          <input type="radio" name="paymentMethod" value="online" [(ngModel)]="paymentMethod" />
+          Paiement en ligne
+        </label>
+        <label>
+          <input type="radio" name="paymentMethod" value="cash" [(ngModel)]="paymentMethod" />
+          Cash à la livraison
+        </label>
+      </div>
+      <button class="btn btn-continue" (click)="proceedToPayment()" [disabled]="!paymentMethod">
+        Continuer
+      </button>
+    </form>
+  </div>
+</div>

@@ -11,5 +11,8 @@
       <button class="btn btn-remove" (click)="supprimerDuPanier(i)">Supprimer</button>
     </div>
   </div>
-  <a routerLink="/home" class="btn btn-back">Retour à l'accueil</a>
+  <div class="panier-actions">
+    <a routerLink="/home" class="btn btn-back">Retour à l'accueil</a>
+    <button *ngIf="panier.length > 0" class="btn btn-checkout" (click)="startCheckout()">Passer à l'achat</button>
+  </div>
 </div>

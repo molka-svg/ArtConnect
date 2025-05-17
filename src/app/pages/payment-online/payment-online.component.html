@@ -1,0 +1,75 @@
+<div class="payment-container">
+  <h2>Paiement en ligne</h2>
+  <form #paymentForm="ngForm" (ngSubmit)="submitPayment()">
+    <div class="form-group">
+      <label for="cin">CIN</label>
+      <input
+        type="text"
+        id="cin"
+        name="cin"
+        [(ngModel)]="paymentData.cin"
+        required
+        pattern="[0-9]{8}"
+        #cin="ngModel"
+        [class.is-invalid]="cin.invalid && cin.touched"
+      />
+      <div *ngIf="cin.invalid && cin.touched" class="invalid-feedback">
+        Le CIN doit contenir 8 chiffres.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cardType">Type de carte</label>
+      <select
+        id="cardType"
+        name="cardType"
+        [(ngModel)]="paymentData.cardType"
+        required
+        #cardType="ngModel"
+        [class.is-invalid]="cardType.invalid && cardType.touched"
+      >
+        <option value="" disabled>Sélectionner</option>
+        <option value="visa">Visa</option>
+        <option value="mastercard">Mastercard</option>
+        <option value="other">Autre</option>
+      </select>
+      <div *ngIf="cardType.invalid && cardType.touched" class="invalid-feedback">
+        Veuillez sélectionner un type de carte.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Numéro de téléphone</label>
+      <input
+        type="text"
+        id="phone"
+        name="phone"
+        [(ngModel)]="paymentData.phone"
+        required
+        pattern="[0-9]{8}"
+        #phone="ngModel"
+        [class.is-invalid]="phone.invalid && phone.touched"
+      />
+      <div *ngIf="phone.invalid && phone.touched" class="invalid-feedback">
+        Le numéro doit contenir 8 chiffres.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cardNumber">Numéro de carte</label>
+      <input
+        type="text"
+        id="cardNumber"
+        name="cardNumber"
+        [(ngModel)]="paymentData.cardNumber"
+        required
+        pattern="[0-9]{16}"
+        #cardNumber="ngModel"
+        [class.is-invalid]="cardNumber.invalid && cardNumber.touched"
+      />
+      <div *ngIf="cardNumber.invalid && cardNumber.touched" class="invalid-feedback">
+        Le numéro de carte doit contenir 16 chiffres.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="paymentForm.invalid">
+      Confirmer le paiement
+    </button>
+  </form>
+</div>

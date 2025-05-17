@@ -1,0 +1,54 @@
+<div class="payment-container">
+  <h2>Cash à la livraison</h2>
+  <form #paymentForm="ngForm" (ngSubmit)="submitPayment()">
+    <div class="form-group">
+      <label for="cin">CIN</label>
+      <input
+        type="text"
+        id="cin"
+        name="cin"
+        [(ngModel)]="paymentData.cin"
+        required
+        pattern="[0-9]{8}"
+        #cin="ngModel"
+        [class.is-invalid]="cin.invalid && cin.touched"
+      />
+      <div *ngIf="cin.invalid && cin.touched" class="invalid-feedback">
+        Le CIN doit contenir 8 chiffres.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Numéro de téléphone</label>
+      <input
+        type="text"
+        id="phone"
+        name="phone"
+        [(ngModel)]="paymentData.phone"
+        required
+        pattern="[0-9]{8}"
+        #phone="ngModel"
+        [class.is-invalid]="phone.invalid && phone.touched"
+      />
+      <div *ngIf="phone.invalid && phone.touched" class="invalid-feedback">
+        Le numéro doit contenir 8 chiffres.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address">Adresse de livraison</label>
+      <textarea
+        id="address"
+        name="address"
+        [(ngModel)]="paymentData.address"
+        required
+        #address="ngModel"
+        [class.is-invalid]="address.invalid && address.touched"
+      ></textarea>
+      <div *ngIf="address.invalid && address.touched" class="invalid-feedback">
+        L’adresse est requise.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="paymentForm.invalid">
+      Confirmer la commande
+    </button>
+  </form>
+</div>
