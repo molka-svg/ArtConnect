@@ -10,20 +10,32 @@ import { RouterLink, Router } from '@angular/router';
   styleUrls: ['./panier.component.css'],
 })
 export class PanierComponent implements OnInit {
-  panier: any[] = JSON.parse(localStorage.getItem('panier') || '[]');
+  panier: any[] = [];
+  total: number = 0;
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadPanier();
+  }
+
+  loadPanier(): void {
+    this.panier = JSON.parse(localStorage.getItem('panier') || '[]');
+    this.calculerTotal();
+  }
+
+  calculerTotal(): void {
+    this.total = this.panier.reduce((sum, item) => sum + Number(item.prix) * item.quantite, 0);
+  }
 
   supprimerDuPanier(index: number): void {
     this.panier.splice(index, 1);
     localStorage.setItem('panier', JSON.stringify(this.panier));
+    this.calculerTotal();
   }
 
   startCheckout(): void {
-    // Vérification temporaire de l'état de connexion
-    const isLoggedIn = !!localStorage.getItem('token'); // À remplacer par ton service d'authentification
+    const isLoggedIn = !!localStorage.getItem('token');
     if (isLoggedIn) {
       this.router.navigate(['/checkout']);
     } else {

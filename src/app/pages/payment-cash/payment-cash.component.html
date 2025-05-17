@@ -1,5 +1,14 @@
 <div class="payment-container">
   <h2>Cash à la livraison</h2>
+  <div class="panier-summary">
+    <h3>Récapitulatif</h3>
+    <ul>
+      <li *ngFor="let item of panier">
+        {{ item.titre }} - {{ item.prix }} € x {{ item.quantite }}
+      </li>
+    </ul>
+    <p><strong>Total: {{ total | number:'1.2-2' }} €</strong></p>
+  </div>
   <form #paymentForm="ngForm" (ngSubmit)="submitPayment()">
     <div class="form-group">
       <label for="cin">CIN</label>
@@ -47,7 +56,7 @@
         L’adresse est requise.
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="paymentForm.invalid">
+    <button type="submit" class="btn btn-primary" [disabled]="paymentForm.invalid || panier.length === 0">
       Confirmer la commande
     </button>
   </form>

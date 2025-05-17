@@ -7,12 +7,17 @@
         <h3>{{ item.titre }}</h3>
         <p>Prix: {{ item.prix }} €</p>
         <p>Quantité: {{ item.quantite }}</p>
+        <p>Ajouté le: {{ item.date_ajout | date:'short' }}</p>
       </div>
       <button class="btn btn-remove" (click)="supprimerDuPanier(i)">Supprimer</button>
     </div>
+  </div>
+  <div class="panier-total">
+    <p><strong>Total: {{ total | number:'1.2-2' }} €</strong></p>
   </div>
   <div class="panier-actions">
     <a routerLink="/home" class="btn btn-back">Retour à l'accueil</a>
     <button *ngIf="panier.length > 0" class="btn btn-checkout" (click)="startCheckout()">Passer à l'achat</button>
   </div>
+  <a class="text-indigo-600 hover:text-indigo-800" routerLink="/order-history">Historique des Commandes</a>
 </div>

@@ -20,6 +20,7 @@ import { EvenementsEnAttenteComponent } from './admin/evenements-en-attente/even
 import { CheckoutComponent } from './pages/checkout/checkout.component'; // Importer le composant Checkout
 import { PaymentOnlineComponent } from './pages/payment-online/payment-online.component'; // Importer le composant PaymentOnline
 import { PaymentCashComponent } from './pages/payment-cash/payment-cash.component'; // Importer le composant PaymentCash
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, // Redirection par défaut vers home
@@ -47,4 +48,5 @@ export const routes: Routes = [
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
+  { path: 'order-history', component: OrderHistoryComponent },
 ];

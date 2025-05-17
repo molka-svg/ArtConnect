@@ -1,0 +1,60 @@
+<div class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+  <div class="history-container bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+      <div class="flex justify-between items-center">
+        <div>
+          <h1 class="text-2xl font-bold">Historique des Commandes</h1>
+          <p class="text-indigo-100">Consultez vos anciennes commandes</p>
+        </div>
+        <div class="animate-pulse">
+          <i class="fas fa-history text-2xl"></i>
+        </div>
+      </div>
+    </div>
+    <div class="orders-list p-6">
+      <h3 class="text-lg font-medium text-white mb-4">Vos Commandes</h3>
+      <div *ngIf="orders.length === 0" class="text-gray-300 text-center">
+        Aucune commande trouvée.
+        <a
+          routerLink="/home"
+          class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 mt-4 inline-block"
+        >
+          Découvrir les œuvres
+        </a>
+      </div>
+      <div *ngFor="let order of orders" class="order-card mb-4 p-4 rounded-lg bg-gray-800 shadow">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-white font-medium">Commande #{{ order.id }}</p>
+            <p class="text-gray-300 text-sm">{{ order.date | date:'dd/MM/yyyy HH:mm' }}</p>
+            <p class="text-gray-300 text-sm">Total : {{ order.total | number:'1.2-2' }} €</p>
+            <p class="text-gray-300 text-sm">Statut : {{ order.status }}</p>
+            <p class="text-gray-300 text-sm">Méthode : {{ order.payment_method }}</p>
+          </div>
+          <button
+            class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-2 px-4 rounded-lg font-medium hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-200 flex items-center"
+            (click)="viewOrderDetails(order)"
+          >
+            <i class="fas fa-eye mr-2"></i> Détails
+          </button>
+        </div>
+        <div *ngIf="selectedOrderId === order.id" class="mt-4">
+          <h4 class="text-white font-medium mb-2">Articles</h4>
+          <ul class="list-none p-0 m-0">
+            <li *ngFor="let item of order.items" class="text-gray-300 text-sm mb-2">
+              {{ item.titre }} - {{ item.prix | number:'1.2-2' }} € x {{ item.quantite }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="p-6">
+      <!-- <button
+        class="bg-gray-500 text-white py-3 px-6 rounded-lg font-medium hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 w-full"
+        (click)="router.navigate(['/home'])"
+      >
+        Retour à l'accueil
+      </button> -->
+    </div>
+  </div>
+</div>

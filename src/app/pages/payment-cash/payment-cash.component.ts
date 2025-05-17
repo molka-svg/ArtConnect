@@ -18,15 +18,28 @@ export class PaymentCashComponent {
     phone: '',
     address: '',
   };
-  panier: any[] = JSON.parse(localStorage.getItem('panier') || '[]');
+  panier: any[] = [];
+  total: number = 0;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) {
+    this.loadPanier();
+  }
+
+  loadPanier(): void {
+    this.panier = JSON.parse(localStorage.getItem('panier') || '[]');
+    this.total = this.panier.reduce((sum, item) => sum + Number(item.prix) * item.quantite, 0);
+  }
 
   submitPayment(): void {
+    if (this.panier.length === 0) {
+      alert('Votre panier est vide.');
+      return;
+    }
+
     const token = this.authService.getToken();
     if (!token) {
       alert('Erreur : Utilisateur non connecté');
@@ -34,13 +47,16 @@ export class PaymentCashComponent {
       return;
     }
 
-    const total = this.panier.reduce((sum, item) => sum + item.prix * item.quantite, 0);
     const orderData = {
       userCin: this.paymentData.cin,
-      total,
+      total: this.total,
       address: this.paymentData.address,
       phone: this.paymentData.phone,
-      panier: this.panier,
+      panier: this.panier.map(item => ({
+        id: item.oeuvre_id, // Correspond à artwork_id dans order_items
+        prix: Number(item.prix),
+        quantite: item.quantite
+      })),
     };
 
     const headers = new HttpHeaders({
@@ -56,7 +72,8 @@ export class PaymentCashComponent {
           this.router.navigate(['/home']);
         },
         error: (error) => {
-          alert('Erreur lors de la commande : ' + error.error.message);
+          console.error('Erreur:', error);
+          alert('Erreur lors de la commande : ' + (error.error.message || 'Erreur inconnue'));
         },
       });
   }

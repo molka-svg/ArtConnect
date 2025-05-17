@@ -1,5 +1,14 @@
 <div class="payment-container">
   <h2>Paiement en ligne</h2>
+  <div class="panier-summary">
+    <h3>Récapitulatif de la commande</h3>
+    <ul>
+      <li *ngFor="let item of panier">
+        {{ item.titre }} - {{ item.prix }} dt x {{ item.quantite }}
+      </li>
+    </ul>
+    <p><strong>Total : {{ total | number:'1.2-2' }} €</strong></p>
+  </div>
   <form #paymentForm="ngForm" (ngSubmit)="submitPayment()">
     <div class="form-group">
       <label for="cin">CIN</label>
@@ -62,14 +71,21 @@
         required
         pattern="[0-9]{16}"
         #cardNumber="ngModel"
-        [class.is-invalid]="cardNumber.invalid && cardNumber.touched"
+        [class.is-invalid]="cardNumber.invalid && cardType.touched"
       />
       <div *ngIf="cardNumber.invalid && cardNumber.touched" class="invalid-feedback">
         Le numéro de carte doit contenir 16 chiffres.
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="paymentForm.invalid">
-      Confirmer le paiement
-    </button>
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="paymentForm.invalid || panier.length === 0"
+      >
+        Confirmer le paiement
+      </button>
+     
+    </div>
   </form>
 </div>

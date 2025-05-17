@@ -1,3 +1,4 @@
+const Order = require('../model/orderModel');
 exports.createOnlinePayment = async (req, res) => {
   console.log('Requête reçue:', req.body); // Log des données reçues
   console.log('Utilisateur:', req.user); // Log de req.user
