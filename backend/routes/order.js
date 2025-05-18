@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../config/database');
+const connection = require('../config/db');
 const jwt = require('jsonwebtoken');
 
 // Middleware pour vérifier le token

@@ -23,6 +23,8 @@ const oeuvreRoutes = require('./routes/oeuvreRoutes');
 const evenementRoutes = require('./routes/evenementRoutes');
 const admin = require('./routes/adminRoutes');
 const orderRoutes = require('./routes/order');
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/users', userRoutes);

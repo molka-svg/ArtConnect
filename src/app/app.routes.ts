@@ -21,6 +21,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component'; // Impo
 import { PaymentOnlineComponent } from './pages/payment-online/payment-online.component'; // Importer le composant PaymentOnline
 import { PaymentCashComponent } from './pages/payment-cash/payment-cash.component'; // Importer le composant PaymentCash
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, // Redirection par défaut vers home
@@ -49,4 +50,5 @@ export const routes: Routes = [
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
   { path: 'order-history', component: OrderHistoryComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
 ];
