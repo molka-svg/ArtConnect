@@ -29,13 +29,11 @@ export class EvenementService {
       alert('Token manquant. Veuillez vous reconnecter.');
       return throwError('Token manquant');
     }
-
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
     console.log('Token envoyé:', token);
-
     return this.http.post(`${this.apiUrl}/add`, evenement, { headers }).pipe(
       catchError(error => {
         console.error('Erreur serveur:', error);
@@ -62,18 +60,28 @@ export class EvenementService {
   }
 
   getEvenementById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/evenement/${id}`);
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  modifierEvenement(id: number, data: any): Observable<any> {
-    const headers = this.getAuthHeaders();
-    return this.http.put(`${this.apiUrl}/edit/${id}`, data, { headers }).pipe(
-      catchError(error => {
-        console.error('Erreur modification événement:', error);
-        return throwError(error);
-      })
-    );
-  }
+modifierEvenement(id: number, data: any): Observable<any> {
+  const headers = this.getAuthHeaders();
+  return this.http.put(`${this.apiUrl}/edit/${id}`, data, { headers }).pipe(
+    catchError(error => {
+      console.error('Détails erreur:', error);
+      let errorMessage = 'Erreur lors de la modification';
+      
+      if (error.status === 403) {
+        errorMessage = 'Action non autorisée';
+      } else if (error.status === 404) {
+        errorMessage = 'Événement non trouvé';
+      } else if (error.error?.message) {
+        errorMessage = error.error.message;
+      }
+
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
 
   supprimerEvenement(id: number): Observable<any> {
     const headers = this.getAuthHeaders();

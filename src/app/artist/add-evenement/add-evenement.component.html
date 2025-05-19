@@ -1,7 +1,7 @@
-<a class="btn-retour" routerLink="/artiste/mes-evenements" >← Retour</a>
+<a class="btn-retour" routerLink="/artiste/mes-evenements">← Retour</a>
 <div class="container mt-4">
   <h3>Ajouter un Événement</h3>
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
     <div class="form-group">
       <label>Titre</label>
       <input [(ngModel)]="evenement.titre" name="titre" class="form-control" required />
@@ -12,7 +12,9 @@
     </div>
     <div class="form-group">
       <label>Date</label>
-      <input [(ngModel)]="evenement.date_evt" name="date_evt" type="date" class="form-control" required />
+      <input [(ngModel)]="evenement.date_evt" name="date_evt" type="date" class="form-control" required 
+             [min]="minDate" (change)="checkDate()" />
+      <small *ngIf="dateError" class="text-danger">La date ne peut pas être antérieure à aujourd'hui</small>
     </div>
     <div class="form-group">
       <label>Heure</label>
@@ -30,6 +32,6 @@
       <label>Nombre de Places</label>
       <input [(ngModel)]="evenement.nombre_places" name="nombre_places" type="number" class="form-control" required />
     </div>
-    <button type="submit" class="btn btn-success mt-4">Créer</button>
+    <button type="submit" class="btn btn-success mt-4" [disabled]="dateError || eventForm.invalid">Créer</button>
   </form>
 </div>

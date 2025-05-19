@@ -1,4 +1,4 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="evenement">
   <h3>Modifier l'Événement</h3>
   <form (ngSubmit)="updateEvenement()">
     <div class="form-group">
@@ -31,4 +31,11 @@
     </div>
     <button type="submit" class="btn btn-primary mt-4">Mettre à jour</button>
   </form>
+</div>
+
+<div *ngIf="!evenement" class="text-center mt-5">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Chargement...</span>
+  </div>
+  <p>Chargement de l'événement...</p>
 </div>

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ArtworkService } from '../../services/artwork.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-edit-artwork',
   standalone: true,
@@ -40,17 +40,41 @@ export class EditArtworkComponent {
         error: err => console.error(err)
       });
     }
+  
     saveChanges() {
-      if (confirm('Êtes-vous sûr de vouloir enregistrer les modifications ?')) {
-        this.artworkService.updateArtwork(this.artworkId, this.artwork).subscribe(
-          (response) => {
-            console.log('Artwork updated:', response);
-            this.router.navigate(['/mes-oeuvres']);
-          },
-          (error) => {
-            console.error('Error saving artwork:', error);
-          }
-        );
-      }
+      Swal.fire({
+        title: 'Confirmer les modifications',
+        text: "Êtes-vous sûr de vouloir enregistrer ces modifications ?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, enregistrer',
+        cancelButtonText: 'Annuler'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.artworkService.updateArtwork(this.artworkId, this.artwork).subscribe(
+            (response) => {
+              Swal.fire({
+                title: 'Succès!',
+                text: 'Votre œuvre a été mise à jour avec succès.',
+                icon: 'success',
+                timer: 1500, 
+                showConfirmButton: false
+              }).then(() => {
+                this.router.navigate(['/mes-oeuvres']);
+              });
+            },
+            (error) => {
+              Swal.fire({
+                title: 'Erreur!',
+                text: 'Une erreur est survenue lors de la mise à jour.',
+                icon: 'error'
+              });
+              console.error('Error saving artwork:', error);
+            }
+          );
+        }
+      });
     }
   }

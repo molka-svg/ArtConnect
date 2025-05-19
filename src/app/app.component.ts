@@ -22,9 +22,7 @@ export class AppComponent implements OnInit{
     window.location.href='/login';
   }
   ngOnInit() {
-  console.log('LoggedIn:', this.authService.isLoggedIn());
-  console.log('IsArtist:', this.authService.isArtist());
-  console.log('Role:', this.authService.getRole());
+
 }
 
 }

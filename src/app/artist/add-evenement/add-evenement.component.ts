@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './add-evenement.component.css'
 })
 export class AddEvenementComponent {
- evenement = {
+evenement = {
     titre: '',
     description: '',
     date_evt: '',
@@ -24,12 +24,32 @@ export class AddEvenementComponent {
     nombre_places: 0
   };
 
+  minDate: string;
+  dateError: boolean = false;
+
   constructor(
     private evenementService: EvenementService,
     private router: Router
-  ) {}
+  ) {
+    // Définir la date minimale comme aujourd'hui
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
+  }
+
+  checkDate() {
+    if (this.evenement.date_evt) {
+      const selectedDate = new Date(this.evenement.date_evt);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      this.dateError = selectedDate < today;
+    }
+  }
 
   onSubmit() {
+    if (this.dateError) {
+      return;
+    }
+    
     this.evenementService.ajouterEvenement(this.evenement).subscribe({
       next: res => {
         alert('Événement ajouté avec succès !');

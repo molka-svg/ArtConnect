@@ -24,10 +24,10 @@ export class AdminService {
   }
 
   approuverEvenement(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/evenements/${id}/approuver`, {});
+    return this.http.put(`${this.apiUrl}/evenements/approuver/${id}`, {});
   }
   
   rejeterEvenement(id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/evenements/${id}/rejeter`, {});
+    return this.http.put(`${this.apiUrl}/evenements/rejeter/${id}`, {});
   }
 }

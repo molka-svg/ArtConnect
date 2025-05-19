@@ -1,12 +1,15 @@
 const db = require('../config/db');
 const Evenement = require('../model/evenementModel');
+
 exports.ajouterEvenement = async (req, res) => {
   try {
-    const { titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
+    const { nom, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
     const organisateur_id = req.user.userid; 
-    
+     if (!nom || !date_evt || !heure || !lieu || !nombre_places) {
+      return res.status(400).json({ message: 'Les champs nom, date, heure, lieu et nombre de places sont obligatoires' });
+    }
     const id = await Evenement.ajouter({ 
-      titre,
+        titre,
       description,
       date_evt, 
       heure,
@@ -15,11 +18,15 @@ exports.ajouterEvenement = async (req, res) => {
       lieu,
       prix_ticket,
       nombre_places,
-      places_disponibles: nombre_places, 
-      organisateur_id
+      places_disponibles: nombre_places,
+      organisateur_id,
+      statut: 'en_attente'
     });
     
-    res.status(201).json({ message: 'Événement créé avec succès', id });
+    res.status(201).json({ 
+      message: 'Votre événement est en cours de considération...', 
+      id 
+    });
   } catch (err) {
     res.status(500).json({ 
       message: 'Erreur lors de la création',
@@ -65,7 +72,7 @@ exports.approuverEvenement = async (req, res) => {
     );
     res.json({ message: 'Événement approuvé avec succès' });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+    res.status(500).json({ message: 'Erreur serveur oui err', error: err.message });
   }
 };
 

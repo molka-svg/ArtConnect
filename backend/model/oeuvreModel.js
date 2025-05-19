@@ -19,7 +19,6 @@ exports.ajouter = async ({ titre, description, prix, type, image, artiste_id }) 
 exports.supprimer = async (id) => {
   await db.promise().query('DELETE FROM oeuvres WHERE oeuvre_id = ?', [id]);
 };
-
 exports.getByArtisteId = async (artiste_id) => {
   const [rows] = await db.promise().query(
     'SELECT * FROM oeuvres WHERE artiste_id = ?',

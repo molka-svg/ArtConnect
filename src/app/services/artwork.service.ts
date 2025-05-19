@@ -72,10 +72,8 @@ export class ArtworkService {
       })
     );
   }
-  
-
    updateArtwork(id: number, artwork: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/update/${id}`, artwork);
+    return this.http.put(`${this.baseUrl}/modifier/${id}`, artwork);
   }
   
 }
