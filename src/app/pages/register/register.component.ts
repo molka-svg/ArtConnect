@@ -21,7 +21,9 @@ export class RegisterComponent {
     gender: 'female',
     date_naissance: ''
   };
-  
+  // Dans votre composant
+acceptTerms: boolean = false;
+showTerms: boolean = false;
   confirmPassword = '';
   errorMessage = '';
   ageValid = true;

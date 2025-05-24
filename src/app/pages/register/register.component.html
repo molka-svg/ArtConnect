@@ -37,11 +37,36 @@
       <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required 
              placeholder="Confirmez votre mot de passe">
       
+    <div class="terms-section">
+  <label for="acceptTerms">
+    <input type="checkbox" id="acceptTerms" [(ngModel)]="acceptTerms" name="acceptTerms" required>
+    J'accepte les <a href="javascript:void(0)" (click)="showTerms = true">conditions générales</a>
+  </label>
+</div>
+      
       <div class="error-message" *ngIf="errorMessage && ageValid">{{errorMessage}}</div>
       
-      <button type="submit">S'inscrire</button>
+      <button type="submit" [disabled]="!acceptTerms">S'inscrire</button>
       
       <a routerLink="/login" class="link">Déjà inscrit? Connectez-vous ici</a>
     </form>
+  </div>
+
+  <!-- Modal pour les conditions générales -->
+  <div class="terms-modal" *ngIf="showTerms">
+    <div class="terms-content">
+      <span class="close" (click)="showTerms = false">&times;</span>
+      <h3>Conditions générales d'utilisation</h3>
+      <ol>
+        <li>Vous devez avoir au moins 18 ans pour utiliser ce service.</li>
+        <li>Vous êtes responsable de la confidentialité de votre compte et mot de passe.</li>
+        <li>Les contenus illégaux ou offensants sont strictement interdits.</li>
+        <li>Nous nous réservons le droit de suspendre tout compte violant nos règles.</li>
+        <li>Vos données personnelles seront traitées conformément à notre politique de confidentialité.</li>
+        <li>Toute activité frauduleuse entraînera la résiliation immédiate de votre compte.</li>
+        <li>Vous acceptez de recevoir des communications relatives à votre compte.</li>
+      </ol>
+      <button (click)="showTerms = false">Fermer</button>
+    </div>
   </div>
 </div>

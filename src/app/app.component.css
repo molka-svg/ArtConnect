@@ -55,3 +55,12 @@
 span{
   color: antiquewhite;
 }
+
+  .btn-hover-effect {
+    transition: all 0.2s ease;
+    border-width: 1.5px;
+  }
+  .btn-hover-effect:hover {
+    transform: scale(1.05);
+    background-color: rgba(13, 110, 253, 0.05);
+  }

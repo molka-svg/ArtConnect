@@ -17,7 +17,13 @@
         </div>
         <div class="form-group half-width">
           type:
-          <input type="text" placeholder="Type" [(ngModel)]="artwork.type" name="type" />
+          <select [(ngModel)]="artwork.type" name="type" class="styled-select">
+            <option value="" disabled selected>Select artwork type</option>
+            <option value="peinture">Peinture</option>
+            <option value="sculpture">Sculpture</option>
+            <option value="dessin">Dessin</option>
+            <option value="gravure">Gravure</option>
+          </select>
         </div>
       </div>
       <div class="form-group">
