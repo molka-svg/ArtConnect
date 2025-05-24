@@ -240,3 +240,26 @@
     transform: translateY(0);
   }
 }
+.malouk {
+  background: none; /* Supprime le fond du bouton */
+  border: none; /* Supprime la bordure */
+  padding: 0; /* Supprime le padding par défaut */
+  cursor: pointer; /* Change le curseur en main au survol */
+  font-size: 1.5rem; /* Taille de l'icône */
+  color: #333; /* Couleur de base */
+  transition: transform 0.2s, color 0.2s; /* Animation fluide */
+}
+
+.malouk:hover {
+  color: #007bff; /* Changement de couleur au survol */
+  transform: scale(1.1); /* Légère augmentation de taille */
+}
+
+.malouk:active {
+  transform: scale(0.95); /* Effet de clic */
+}
+
+/* Si vous utilisez Font Awesome */
+.fas.fa-shopping-cart {
+  display: inline-block;
+}

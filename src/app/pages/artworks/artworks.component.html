@@ -40,9 +40,10 @@
         <p class="type">{{ oeuvre.type }}</p>
         <p class="price"><i class="fas fa-coins"></i> {{ oeuvre.prix }} DT</p>
         <div class="actions">
-          <button class="btn btn-add" (click)="ajouterAuPanier(oeuvre)">
-            <i class="fas fa-cart-plus icon-sm"></i> Ajouter
-          </button>
+<button  class="malouk"  (click)="ajouterAuPanier(oeuvre)">
+<i class="fas fa-shopping-cart">🛒</i>
+</button>
+
           <button class="btn btn-details" (click)="voirDetails(oeuvre)">
             <i class="fas fa-info-circle icon-sm"></i> Détails
           </button>

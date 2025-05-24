@@ -22,7 +22,7 @@ import { PaymentOnlineComponent } from './pages/payment-online/payment-online.co
 import { PaymentCashComponent } from './pages/payment-cash/payment-cash.component'; // Importer le composant PaymentCash
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-
+import { AuctionComponent } from './pages/auction/auction.component';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, // Redirection par défaut vers home
   { path: 'home', component: HomeComponent },
@@ -45,6 +45,7 @@ export const routes: Routes = [
   { path: 'conditions', component: ConditionsDUtilisationComponent }, // Ajouté pour cohérence, si utilisé
   { path: 'admin/oeuvres-en-attente', component: OeuvresEnAttenteComponent },
   { path: 'admin/evenements-en-attente', component: EvenementsEnAttenteComponent },
+  {path:'auction',component:AuctionComponent},
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
