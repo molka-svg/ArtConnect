@@ -1,1 +1,29 @@
-<p>my-auctions works!</p>
+<div class="container mt-4">
+  <h2>Mes Enchères</h2>
+  
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && encheres.length === 0" class="alert alert-info">
+    Vous n'avez pas encore créé d'enchères.
+  </div>
+
+  <div class="row">
+    <div *ngFor="let enchere of encheres" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img [src]="enchere.image" class="card-img-top" [alt]="enchere.titre">
+        <div class="card-body">
+          <h5 class="card-title">{{ enchere.titre }}</h5>
+          <p class="card-text">Prix de départ: {{ enchere.mise_de_depart }} €</p>
+          <p class="card-text">Fin: {{ enchere.date_fin  }}</p>
+          <a [routerLink]="['/auction', enchere.enchere_id]" class="btn btn-primary">
+            Voir détails
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

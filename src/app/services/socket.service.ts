@@ -37,4 +37,20 @@ export class SocketService {
   disconnect() {
     this.socket.disconnect();
   }
+   onNouvelleEnchere(callback: (data: any) => void) {
+    this.socket.on('nouvelleEnchere', callback);
+  }
+
+  onEnchereUpdated(callback: (data: any) => void) {
+    this.socket.on('enchereUpdated', callback);
+  }
+
+  onTopMiseChanged(callback: (data: any) => void) {
+    this.socket.on('topMiseChanged', callback);
+  }
+
+  leaveEnchere(enchereId: number) {
+    this.socket.emit('leaveEnchere', enchereId);
+  }
+
 }
