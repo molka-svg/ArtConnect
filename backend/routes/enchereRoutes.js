@@ -7,5 +7,8 @@ router.post('/create', enchereController.creerEnchere);
 
 // Placer une mise
 router.post('/mise', enchereController.placerMise);
-
+router.get('/artiste/:artiste_id', enchereController.getEncheresByArtiste);
+router.get('/actives', enchereController.getEncheresActives);
+router.get('/:enchere_id', enchereController.getEnchereDetails);
+router.get('/:enchere_id/mises', enchereController.getMisesByEnchere);
 module.exports = router;

@@ -28,3 +28,12 @@ exports.placerMise = (mise, callback) => {
     db.query(sql, values, callback);
   });
 };
+exports.getMisesByEnchere = (enchere_id, callback) => {
+  const sql = `
+    SELECT m.*, u.nom, u.prenom
+    FROM mises m
+    JOIN users u ON m.utilisateur_id = u.userid
+    WHERE m.enchere_id = ?
+    ORDER BY m.montant DESC`;
+  db.query(sql, [enchere_id], callback);
+};

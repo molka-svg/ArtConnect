@@ -35,3 +35,41 @@ exports.placerMise = (req, res) => {
     res.status(201).json({ message: 'Mise enregistrée' });
   });
 };
+// Obtenir les enchères d'un artiste
+exports.getEncheresByArtiste = (req, res) => {
+  const { artiste_id } = req.params;
+  
+  enchereModel.getEncheresByArtiste(artiste_id, (err, result) => {
+    if (err) return res.status(500).json({ message: 'Erreur serveur', error: err });
+    res.status(200).json(result);
+  });
+};
+
+// Obtenir les enchères actives
+exports.getEncheresActives = (req, res) => {
+  enchereModel.getEncheresActives((err, result) => {
+    if (err) return res.status(500).json({ message: 'Erreur serveur', error: err });
+    res.status(200).json(result);
+  });
+};
+
+// Obtenir les détails d'une enchère
+exports.getEnchereDetails = (req, res) => {
+  const { enchere_id } = req.params;
+  
+  enchereModel.getEnchereDetails(enchere_id, (err, result) => {
+    if (err) return res.status(500).json({ message: 'Erreur serveur', error: err });
+    if (result.length === 0) return res.status(404).json({ message: 'Enchère non trouvée' });
+    res.status(200).json(result[0]);
+  });
+};
+
+// Obtenir l'historique des mises pour une enchère
+exports.getMisesByEnchere = (req, res) => {
+  const { enchere_id } = req.params;
+  
+  miseModel.getMisesByEnchere(enchere_id, (err, result) => {
+    if (err) return res.status(500).json({ message: 'Erreur serveur', error: err });
+    res.status(200).json(result);
+  });
+};
