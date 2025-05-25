@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AddEvenementComponent {
 evenement = {
-    titre: '',
+    nom: '',
     description: '',
     date_evt: '',
     heure: '',
