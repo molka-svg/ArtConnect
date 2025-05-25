@@ -80,13 +80,11 @@ export class CreateAuctionComponent {
       date_fin: new Date(formValue.date_fin).toISOString(),
       signature_validation: false
     };
-
     if (!auctionData.artiste_id) {
       this.errorMessage = 'Erreur: Impossible de récupérer l\'identifiant de l\'artiste. Veuillez vous reconnecter.';
       this.isSubmitting = false;
       return;
     }
-
     this.auctionService.creerEnchere(auctionData).subscribe({
       next: (response) => {
         this.successMessage = 'Enchère et œuvre créées avec succès!';
