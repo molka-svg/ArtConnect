@@ -24,13 +24,12 @@ export class AuthService {
 
 isArtist(): boolean {
   const role = this.getRole();
-  console.log('Role from token:', role);
 
   if (role === 'artiste' || role === 'admin') {
-    console.log('true');
+  
     return true;
   } else {
-    console.log('false');
+
     return false;
   }
 }

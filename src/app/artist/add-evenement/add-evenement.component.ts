@@ -3,17 +3,18 @@ import { FormBuilder, FormGroup, FormsModule, NgModel } from '@angular/forms';
 import { EvenementService } from '../../services/evenement.service';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-add-evenement',
   standalone: true,
-  imports: [FormsModule,RouterLink],
+  imports: [FormsModule,RouterLink,NgIf,NgFor],
   templateUrl: './add-evenement.component.html',
   styleUrl: './add-evenement.component.css'
 })
 export class AddEvenementComponent {
 evenement = {
-    nom: '',
+    titre: '',
     description: '',
     date_evt: '',
     heure: '',

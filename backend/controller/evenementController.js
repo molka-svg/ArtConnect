@@ -4,14 +4,12 @@ const Evenement = require('../model/evenementModel');
 exports.ajouterEvenement = async (req, res) => {
   try {
     const { titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
-    const organisateur_id = req.user.userid; 
-     if (!titre || !date_evt || !heure || !lieu || !nombre_places) {
-      return res.status(400).json({ message: 'Les champs titre, date, heure, lieu et nombre de places sont obligatoires' });
-    }
+    const organisateur_id = req.user.userid;
+    
     const id = await Evenement.ajouter({ 
-        titre,
+      titre,
       description,
-      date_evt, 
+      date_evt,
       heure,
       type,
       duree,
@@ -44,6 +42,7 @@ exports.getEvenementsByOrganisateur = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération', error: err.message });
   }
 };
+
 exports.getEvenementsEnAttente = async (req, res) => {
   try {
     if (req.user.role !== 'admin') {
@@ -66,13 +65,10 @@ exports.approuverEvenement = async (req, res) => {
     }
     
     const { id } = req.params;
-    await db.promise().query(
-      'UPDATE evenement SET statut = "approuve" WHERE id = ?',
-      [id]
-    );
+    await db.promise().query('UPDATE evenement SET statut = "approuve" WHERE id = ?', [id]);
     res.json({ message: 'Événement approuvé avec succès' });
   } catch (err) {
-    res.status(500).json({ message: 'Erreur serveur oui err', error: err.message });
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
 
@@ -83,10 +79,7 @@ exports.rejeterEvenement = async (req, res) => {
     }
     
     const { id } = req.params;
-    await db.promise().query(
-      'UPDATE evenement SET statut = "rejete" WHERE id = ?',
-      [id]
-    );
+    await db.promise().query('UPDATE evenement SET statut = "rejete" WHERE id = ?', [id]);
     res.json({ message: 'Événement rejeté avec succès' });
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
@@ -95,39 +88,42 @@ exports.rejeterEvenement = async (req, res) => {
 
 exports.getAllEvenements = async (req, res) => {
   try {
-    const query = `
+    const [rows] = await db.promise().query(`
       SELECT e.*, CONCAT(u.prenom, ' ', u.titre) AS organisateur_nom
       FROM evenement e
       LEFT JOIN users u ON e.organisateur_id = u.userid
       WHERE e.statut = 'approuve'
-    `;
-    const [rows] = await db.promise().query(query);
+    `);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ message: 'Erreur lors de la récupération des événements', error: err.message });
   }
 };
-exports.getEvenementById = (req, res) => {
-  const { id } = req.params;
-  const query = `SELECT * FROM evenement WHERE id = ?`;
-  db.query(query, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: 'Erreur serveur', error: err });
-    }
-    if (result.length === 0) {
+
+exports.getEvenementById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [rows] = await db.promise().query('SELECT * FROM evenement WHERE id = ?', [id]);
+    
+    if (rows.length === 0) {
       return res.status(404).json({ message: 'Événement non trouvé' });
     }
-    res.status(200).json(result[0]);
-  });
+    
+    res.status(200).json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
 };
 
 exports.modifierEvenement = async (req, res) => {
   try {
     const id = req.params.id;
     const evenement = await Evenement.getById(id);
+    
     if (!evenement || evenement.organisateur_id !== req.user.userid) {
       return res.status(403).json({ message: 'Non autorisé' });
     }
+    
     await Evenement.modifier(id, req.body);
     res.json({ message: 'Événement modifié avec succès' });
   } catch (err) {

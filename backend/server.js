@@ -81,11 +81,18 @@ io.on('connection', (socket) => {
   });
 });
 
-// Vérification des enchères terminées
 const checkEncheresTerminees = async () => {
   try {
     const sql = `
-      SELECT e.enchere_id, e.oeuvre_id, MAX(m.montant) as max_mise, m.utilisateur_id
+      SELECT 
+        e.enchere_id, 
+        e.oeuvre_id, 
+        MAX(m.montant) as max_mise,
+        (SELECT m2.utilisateur_id 
+         FROM mises m2 
+         WHERE m2.enchere_id = e.enchere_id 
+         ORDER BY m2.montant DESC 
+         LIMIT 1) as utilisateur_id
       FROM enchere e
       LEFT JOIN mises m ON e.enchere_id = m.enchere_id
       WHERE e.date_fin <= NOW() AND e.est_validee = TRUE
