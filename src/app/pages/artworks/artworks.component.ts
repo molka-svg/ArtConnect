@@ -28,6 +28,7 @@ export class ArtworksComponent implements OnInit {
 
   ngOnInit(): void {
     this.oeuvreService.getAllOeuvres().subscribe((data) => {
+      
       this.oeuvres = data;
       this.oeuvresFiltrees = data;
     });

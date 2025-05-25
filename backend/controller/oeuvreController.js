@@ -37,15 +37,19 @@ exports.supprimerOeuvre = async (req, res) => {
 
 exports.getOeuvreById = (req, res) => {
   const { id } = req.params;
-  const query = `SELECT * FROM oeuvres WHERE oeuvre_id = ?`;
+  const query = `
+    SELECT 
+      o.*, 
+      u.nom AS artiste_nom,
+      u.prenom AS artiste_prenom
+    FROM oeuvres o
+    JOIN users u ON o.artiste_id = u.userid
+    WHERE o.oeuvre_id = ?
+  `;
   
   db.query(query, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: 'Erreur serveur', error: err });
-    }
-    if (result.length === 0) {
-      return res.status(404).json({ message: 'Œuvre non trouvée' });
-    }
+    if (err) return res.status(500).json({ error: err.message });
+    if (result.length === 0) return res.status(404).json({ message: 'Œuvre non trouvée' });
     res.status(200).json(result[0]);
   });
 };

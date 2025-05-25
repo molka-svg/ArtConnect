@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtworkService } from '../../services/artwork.service';
-
+import { OeuvreService } from '../../services/oeuvre.service';
 @Component({
   selector: 'app-detail-artwork',
   standalone: true,
@@ -25,6 +25,7 @@ export class DetailArtworkComponent implements OnInit {
     this.artworkService.getArtworkById(this.artworkId).subscribe(
       (artwork) => {
         this.artwork = artwork;  
+        console.log("Artwork details:", artwork);
       },
       (error) => {
         console.error('Error loading artwork for edit:', error);
