@@ -3,10 +3,10 @@ const Evenement = require('../model/evenementModel');
 
 exports.ajouterEvenement = async (req, res) => {
   try {
-    const { nom, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
+    const { titre, description, date_evt, heure, type, duree, lieu, prix_ticket, nombre_places } = req.body;
     const organisateur_id = req.user.userid; 
-     if (!nom || !date_evt || !heure || !lieu || !nombre_places) {
-      return res.status(400).json({ message: 'Les champs nom, date, heure, lieu et nombre de places sont obligatoires' });
+     if (!titre || !date_evt || !heure || !lieu || !nombre_places) {
+      return res.status(400).json({ message: 'Les champs titre, date, heure, lieu et nombre de places sont obligatoires' });
     }
     const id = await Evenement.ajouter({ 
         titre,
@@ -51,7 +51,7 @@ exports.getEvenementsEnAttente = async (req, res) => {
     }
     
     const [rows] = await db.promise().query(
-      'SELECT e.*, CONCAT(u.prenom, " ", u.nom) AS organisateur_nom FROM evenement e JOIN users u ON e.organisateur_id = u.userid WHERE e.statut = "en_attente"'
+      'SELECT e.*, CONCAT(u.prenom, " ", u.titre) AS organisateur_nom FROM evenement e JOIN users u ON e.organisateur_id = u.userid WHERE e.statut = "en_attente"'
     );
     res.json(rows);
   } catch (err) {
@@ -96,7 +96,7 @@ exports.rejeterEvenement = async (req, res) => {
 exports.getAllEvenements = async (req, res) => {
   try {
     const query = `
-      SELECT e.*, CONCAT(u.prenom, ' ', u.nom) AS organisateur_nom
+      SELECT e.*, CONCAT(u.prenom, ' ', u.titre) AS organisateur_nom
       FROM evenement e
       LEFT JOIN users u ON e.organisateur_id = u.userid
       WHERE e.statut = 'approuve'
