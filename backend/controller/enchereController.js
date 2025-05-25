@@ -1,6 +1,8 @@
 const db = require('../config/db');
 
 exports.creerEnchere = async (req, res) => {
+  console.log('req.user:', req.user); // Debug: Log req.user
+  console.log('req.headers.authorization:', req.headers.authorization); // Debug: Log Authorization header
   const { 
     titre, description, image, artiste_id, // Champs pour l'œuvre
     mise_de_depart, increment = 10, date_debut = new Date().toISOString(), date_fin, signature_validation = false 
@@ -8,7 +10,7 @@ exports.creerEnchere = async (req, res) => {
 
   // Validation des champs obligatoires
   if (!titre || !artiste_id || !mise_de_depart || !increment || !date_debut || !date_fin) {
-    return res.status(400).json({ message: 'Tous les champs obligatoires (titre, artiste_id, mise_de_depart, increment, date_debut, date_fin) sont requis' });
+    return res.status(400).json({ message: 'Tous les champs obligatoires sont requis' });
   }
 
   // Validation des dates
@@ -16,58 +18,30 @@ exports.creerEnchere = async (req, res) => {
     return res.status(400).json({ message: 'La date de fin doit être postérieure à la date de début' });
   }
 
-  // Validation que l'utilisateur est un artiste
-  if (req.user.role !== 'artiste') {
-    return res.status(403).json({ message: 'Seuls les artistes peuvent créer des enchères' });
+  // Vérification du rôle
+  if (!req.user || !['artiste', 'admin'].includes(req.user.role)) {
+    return res.status(403).json({ message: 'Seuls les artistes ou administrateurs peuvent créer des enchères' });
   }
 
-  // Vérification que l'artiste_id correspond à l'utilisateur connecté
-  if (artiste_id !== req.user.userid) {
+  // Vérification de l'artiste_id (pour les artistes)
+  if (req.user.role === 'artiste' && artiste_id !== req.user.userid) {
     return res.status(403).json({ message: 'Vous ne pouvez créer une enchère que pour vos propres œuvres' });
   }
 
-  let connection;
   try {
-    // Démarrer une transaction
-    connection = await db.promise().getConnection();
-    await connection.beginTransaction();
-
-    // Étape 1 : Créer l'œuvre avec statut 'enchere'
-    const oeuvreData = {
-      titre,
-      description,
-      image,
-      artiste_id,
-      prix: mise_de_depart, // Prix initial comme mise de départ
-      type: 'enchere',
-      statut: 'enchere' // Statut automatiquement défini comme 'enchere'
-    };
-
-    const [oeuvreResult] = await connection.query(
+    // Créer l'œuvre
+    const [oeuvreResult] = await db.promise().query(
       'INSERT INTO oeuvres (titre, description, image, artiste_id, prix, type, statut) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [oeuvreData.titre, oeuvreData.description, oeuvreData.image, oeuvreData.artiste_id, oeuvreData.prix, oeuvreData.type, oeuvreData.statut]
+      [titre, description, image, artiste_id, mise_de_depart, 'enchere', 'enchere']
     );
 
-    // Étape 2 : Créer l'enchère avec l'oeuvre_id généré
-    const enchereData = {
-      oeuvre_id: oeuvreResult.insertId,
-      mise_de_depart,
-      increment,
-      date_debut,
-      date_fin,
-      signature_validation,
-      est_validee: false // Par défaut, l'enchère n'est pas validée
-    };
-
-    const [enchereResult] = await connection.query(
+    // Créer l'enchère
+    const [enchereResult] = await db.promise().query(
       'INSERT INTO enchere (oeuvre_id, mise_de_depart, increment, date_debut, date_fin, signature_validation, est_validee) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [enchereData.oeuvre_id, enchereData.mise_de_depart, enchereData.increment, enchereData.date_debut, enchereData.date_fin, enchereData.signature_validation, enchereData.est_validee]
+      [oeuvreResult.insertId, mise_de_depart, increment, date_debut, date_fin, signature_validation, false]
     );
 
-    // Valider la transaction
-    await connection.commit();
-
-    // Émettre un événement WebSocket pour informer les clients de la nouvelle enchère
+    // Émettre un événement WebSocket
     req.app.get('io').emit('nouvelleEnchere', {
       enchere_id: enchereResult.insertId,
       oeuvre_id: oeuvreResult.insertId,
@@ -78,19 +52,134 @@ exports.creerEnchere = async (req, res) => {
     });
 
     res.status(201).json({ 
-      message: 'Enchère et œuvre créées avec succès', 
+      message: 'Enchère créée avec succès', 
       id: enchereResult.insertId,
       oeuvre_id: oeuvreResult.insertId 
     });
   } catch (err) {
-    if (connection) {
-      await connection.rollback();
+    console.error('Erreur lors de la création:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.placerMise = async (req, res) => {
+  const { enchere_id, utilisateur_id, montant } = req.body;
+
+  if (!enchere_id || !utilisateur_id || !montant) {
+    return res.status(400).json({ message: 'Tous les champs sont requis' });
+  }
+
+  try {
+    const [result] = await db.promise().query(
+      `SELECT mise_de_depart, increment, (SELECT MAX(montant) FROM mises WHERE enchere_id = ?) as max_mise
+       FROM enchere 
+       WHERE enchere_id = ? AND date_fin > NOW() AND est_validee = TRUE`,
+      [enchere_id, enchere_id]
+    );
+
+    if (result.length === 0) {
+      return res.status(400).json({ message: 'Enchère non valide ou terminée' });
     }
-    console.error('Erreur lors de la création : ', err);
-    res.status(500).json({ message: 'Erreur lors de la création de l\'enchère et de l\'œuvre', error: err.message });
-  } finally {
-    if (connection) {
-      connection.release();
+
+    const { mise_de_depart, increment, max_mise } = result[0];
+    const minMise = max_mise ? max_mise + increment : mise_de_depart;
+
+    if (montant < minMise) {
+      return res.status(400).json({ message: `Le montant doit être au moins ${minMise}` });
     }
+
+    await db.promise().query(
+      'INSERT INTO mises (enchere_id, utilisateur_id, montant) VALUES (?, ?, ?)',
+      [enchere_id, utilisateur_id, montant]
+    );
+
+    req.app.get('io').emit('miseUpdate', {
+      enchere_id,
+      utilisateur_id,
+      montant,
+      date_mise: new Date()
+    });
+
+    res.status(201).json({ message: 'Mise placée avec succès' });
+  } catch (err) {
+    console.error('Erreur lors de la mise:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.getEncheresByArtiste = async (req, res) => {
+  const { artiste_id } = req.params;
+
+  try {
+    const [results] = await db.promise().query(
+      `SELECT e.*, o.titre, o.image 
+       FROM enchere e
+       JOIN oeuvres o ON e.oeuvre_id = o.oeuvre_id
+       WHERE o.artiste_id = ?`,
+      [artiste_id]
+    );
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('Erreur lors de la récupération:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.getEncheresActives = async (req, res) => {
+  try {
+    const [results] = await db.promise().query(
+      `SELECT e.*, o.titre, o.image, o.description, CONCAT(u.prenom, ' ', u.nom) as artiste_nom
+       FROM enchere e
+       JOIN oeuvres o ON e.oeuvre_id = o.oeuvre_id
+       JOIN users u ON o.artiste_id = u.userid
+       WHERE e.date_fin > NOW() AND e.est_validee = TRUE
+       ORDER BY e.date_fin ASC`
+    );
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('Erreur lors de la récupération:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.getEnchereDetails = async (req, res) => {
+  const { enchere_id } = req.params;
+
+  try {
+    const [results] = await db.promise().query(
+      `SELECT e.*, o.*, CONCAT(u.prenom, ' ', u.nom) as artiste_nom
+       FROM enchere e
+       JOIN oeuvres o ON e.oeuvre_id = o.oeuvre_id
+       JOIN users u ON o.artiste_id = u.userid
+       WHERE e.enchere_id = ?`,
+      [enchere_id]
+    );
+
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Enchère non trouvée' });
+    }
+    res.status(200).json(results[0]);
+  } catch (err) {
+    console.error('Erreur lors de la récupération:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
+  }
+};
+
+exports.getMisesByEnchere = async (req, res) => {
+  const { enchere_id } = req.params;
+
+  try {
+    const [results] = await db.promise().query(
+      `SELECT m.*, CONCAT(u.prenom, ' ', u.nom) as utilisateur_nom
+       FROM mises m
+       JOIN users u ON m.utilisateur_id = u.userid
+       WHERE m.enchere_id = ?
+       ORDER BY m.montant DESC`,
+      [enchere_id]
+    );
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('Erreur lors de la récupération:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };

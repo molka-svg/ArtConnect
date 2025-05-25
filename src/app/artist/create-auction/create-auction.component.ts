@@ -27,9 +27,9 @@ export class CreateAuctionComponent {
     private socketService: SocketService,
     private router: Router
   ) {
-    // Vérifier si l'utilisateur est connecté et est un artiste
+    // Vérifier si l'utilisateur est connecté et est un artiste ou admin
     if (!this.authService.isLoggedIn() || !this.authService.isArtist()) {
-      this.errorMessage = 'Vous devez être connecté en tant qu\'artiste pour créer une enchère.';
+      this.errorMessage = 'Vous devez être connecté en tant qu\'artiste ou administrateur pour créer une enchère.';
       this.router.navigate(['/login']);
     }
 
