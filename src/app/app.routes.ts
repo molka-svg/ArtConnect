@@ -23,6 +23,7 @@ import { PaymentCashComponent } from './pages/payment-cash/payment-cash.componen
 import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuctionComponent } from './pages/auction/auction.component';
+import { DetailArtworkComponent } from './pages/detail-artwork/detail-artwork.component';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, // Redirection par défaut vers home
   { path: 'home', component: HomeComponent },
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: 'mes-oeuvres', component: ViewArtworkComponent },
   { path: 'my-auctions', component: MyAuctionsComponent },
   { path: 'edit-artwork/:id', component: EditArtworkComponent },
+  { path: 'detail-artwork/:id', component: DetailArtworkComponent },
   { path: 'panier', component: PanierComponent },
   { path: 'checkout', component: CheckoutComponent }, // Nouvelle route pour la confirmation de commande
   { path: 'payment-online', component: PaymentOnlineComponent }, // Nouvelle route pour le paiement en ligne

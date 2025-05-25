@@ -1,0 +1,43 @@
+<div class="detail-container">
+  <div class="detail-card">
+    <div class="card-header">
+      <h2>Détails de l'œuvre</h2>
+      <button class="btn btn-retour" (click)="retourListe()">
+        ← Retour à la liste
+      </button>
+    </div>
+    
+    <div class="card-body">
+      <div class="image-container">
+        <img [src]="artwork?.image" alt="{{ artwork?.titre }}" class="oeuvre-image-large" />
+      </div>
+      
+      <div class="details-info">
+        <div class="detail-item">
+          <span class="detail-label">Titre :</span>
+          <span class="detail-value">{{ artwork?.titre }}</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Artiste :</span>
+          <span class="detail-value">{{ artwork?.artiste_nom }}</span>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Description :</span>
+          <p class="detail-description">{{ artwork?.description }}</p>
+        </div>
+        
+        <div class="detail-item">
+          <span class="detail-label">Type :</span>
+          <span class="detail-value">{{ artwork?.type }}</span>
+        </div>
+        
+        <div class="detail-item highlight">
+          <span class="detail-label">Prix :</span>
+          <span class="detail-value">{{ artwork?.prix }} DT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,265 +1,152 @@
 .container {
   display: flex;
-  padding: 2rem;
   gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .sidebar {
   width: 250px;
-  background: #f9f9f9;
+  background: #f8f9fa;
   padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  font-family: 'Segoe UI', sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.sidebar h3 {
-  margin-bottom: 1rem;
+.sidebar-title {
+  color: #343a40;
+  margin-bottom: 1.5rem;
   font-size: 1.2rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.5rem;
 }
 
-.sidebar label {
+.filter-group {
+  margin-bottom: 1.2rem;
+}
+
+.filter-label {
   display: block;
-  margin-top: 1rem;
-  font-weight: bold;
-  color: #333;
+  margin-bottom: 0.5rem;
+  color: #495057;
+  font-weight: 500;
 }
 
-.sidebar input,
-.sidebar select {
+.filter-input, .filter-select {
   width: 100%;
   padding: 0.5rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 0.9rem;
 }
 
-/* Grid des œuvres */
+.filter-input:focus, .filter-select:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
 .oeuvres-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2rem;
   flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
 .oeuvre-card {
   background: white;
-  border-radius: 16px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
 }
 
 .oeuvre-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.oeuvre-image-container {
+  height: 200px;
+  overflow: hidden;
 }
 
 .oeuvre-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.oeuvre-card:hover .oeuvre-image {
+  transform: scale(1.05);
 }
 
 .oeuvre-info {
-  padding: 1rem;
+  padding: 1.2rem;
 }
 
-.oeuvre-info h3 {
+.oeuvre-title {
   font-size: 1.1rem;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
+  color: #212529;
 }
 
-.artiste {
-  font-style: italic;
-  color: #666;
+.oeuvre-artiste {
+  color: #6c757d;
   font-size: 0.9rem;
+  margin-bottom: 0.3rem;
 }
 
-.type {
-  color: #999;
-  font-size: 0.85rem;
-  margin-bottom: 0.4rem;
+.oeuvre-type {
+  display: inline-block;
+  background: #e9ecef;
+  color: #495057;
+  padding: 0.2rem 0.5rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
-.price {
+.oeuvre-price {
+  color: #d63384;
   font-weight: bold;
-  color: #444;
-  margin: 0.8rem 0;
+  margin-bottom: 1rem;
 }
 
-.actions {
+.oeuvre-actions {
   display: flex;
-  gap: 0.5rem;
-}
-
-.btn {
-  flex: 1;
-  padding: 0.6rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
+}
+
+.btn-cart {
+  background: #ffffff;
+  color: #d63384;
+  border: 1px solid #d63384;
+  border-radius: 5px;
+  padding: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
-.btn i {
-  font-size: 0.85rem;
-}
-
-.btn-add {
-  background: linear-gradient(45deg, #4caf50, #66bb6a);
+.btn-cart:hover {
+  background: #d63384;
   color: white;
-}
-
-.btn-add:hover {
-  background: linear-gradient(45deg, #43a047, #5cbf60);
-  transform: scale(1.03);
 }
 
 .btn-details {
-  background: linear-gradient(45deg, #2196f3, #42a5f5);
+  background: #343a40;
   color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 0.9rem;
 }
 
 .btn-details:hover {
-  background: linear-gradient(45deg, #1976d2, #339af0);
-  transform: scale(1.03);
-}
-
-/* Floating button (panier) */
-.btn-fab {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
-  background: #ff9800;
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  font-size: 1.5rem;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-fab:hover {
-  background: #f57c00;
-  transform: scale(1.1) rotate(5deg);
-}
-.details-panel {
-  margin-top: 20px;
-  padding: 20px;
-  border: 2px solid #ccc;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-}
-
-.oeuvre-image-large {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.btn-close {
-  background-color: #dc3545;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.details-panel {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f4f4f9;
-  border-radius: 10px;
-  border: 2px solid #e0e0e0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.details-panel h2 {
-  font-size: 24px;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.oeuvre-image-large {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.details-panel p {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.details-panel button {
-  background-color: #dc3545;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.details-panel button:hover {
-  background-color: #c82333;
-}
-
-/* Animation légère pour l'affichage des détails */
-.details-panel {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.5s forwards;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.malouk {
-  background: none; /* Supprime le fond du bouton */
-  border: none; /* Supprime la bordure */
-  padding: 0; /* Supprime le padding par défaut */
-  cursor: pointer; /* Change le curseur en main au survol */
-  font-size: 1.5rem; /* Taille de l'icône */
-  color: #333; /* Couleur de base */
-  transition: transform 0.2s, color 0.2s; /* Animation fluide */
-}
-
-.malouk:hover {
-  color: #007bff; /* Changement de couleur au survol */
-  transform: scale(1.1); /* Légère augmentation de taille */
-}
-
-.malouk:active {
-  transform: scale(0.95); /* Effet de clic */
-}
-
-/* Si vous utilisez Font Awesome */
-.fas.fa-shopping-cart {
-  display: inline-block;
+  background: #495057;
 }

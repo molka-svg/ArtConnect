@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink ,Router} from '@angular/router';
 import { OeuvreService } from '../../services/oeuvre.service';
 
 @Component({
@@ -20,7 +20,10 @@ export class ArtworksComponent implements OnInit {
   nomFiltre: string = '';
   artisteFiltre: string = '';
 
-  constructor(private oeuvreService: OeuvreService) {}
+  constructor(
+    private oeuvreService: OeuvreService,
+    private router:Router
+  ) {}
 
   ngOnInit(): void {
     this.oeuvreService.getAllOeuvres().subscribe((data) => {
@@ -56,10 +59,7 @@ export class ArtworksComponent implements OnInit {
     alert('Œuvre ajoutée au panier !');
   }
 
-oeuvreSelectionnee: any = null;
-
-voirDetails(oeuvre: any) {
-  this.oeuvreSelectionnee = oeuvre;
-}
-
+  voirDetails(oeuvre: any) {
+    this.router.navigate(['/detail-artwork', oeuvre.oeuvre_id]);
+  }
 }
