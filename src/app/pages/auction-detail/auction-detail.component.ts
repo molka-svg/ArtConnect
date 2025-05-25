@@ -4,11 +4,12 @@ import { AuctionService } from '../../services/auction.service';
 import { SocketService } from '../../services/socket.service';
 import { AuthService } from '../../services/auth.service';
 import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-auction-detail',
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink],
+  imports: [NgIf, NgFor, RouterLink,FormsModule],
   templateUrl: './auction-detail.component.html',
   styleUrl: './auction-detail.component.css'
 })

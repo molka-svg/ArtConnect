@@ -24,6 +24,8 @@ import { OrderHistoryComponent } from './order-history/order-history.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuctionComponent } from './pages/auction/auction.component';
 import { DetailArtworkComponent } from './pages/detail-artwork/detail-artwork.component';
+import { CreateAuctionComponent } from './artist/create-auction/create-auction.component';
+
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, // Redirection par défaut vers home
   { path: 'home', component: HomeComponent },
@@ -48,6 +50,10 @@ export const routes: Routes = [
   { path: 'admin/oeuvres-en-attente', component: OeuvresEnAttenteComponent },
   { path: 'admin/evenements-en-attente', component: EvenementsEnAttenteComponent },
   {path:'auction',component:AuctionComponent},
+   {path:'createAuction',component:CreateAuctionComponent},
+   {path:'MyAuction',component:MyAuctionsComponent},
+
+
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule),

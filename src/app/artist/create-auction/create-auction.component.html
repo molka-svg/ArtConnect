@@ -1,0 +1,94 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2>Créer une nouvelle enchère</h2>
+      
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+
+      <form [formGroup]="auctionForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="mb-3">
+          <label for="titre" class="form-label">Titre de l'œuvre</label>
+          <input type="text" class="form-control" id="titre" formControlName="titre">
+          <div *ngIf="formControls['titre'].invalid && (formControls['titre'].dirty || formControls['titre'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['titre'].errors?.['required']">Le titre est requis</small>
+            <small *ngIf="formControls['titre'].errors?.['maxlength']">Le titre ne peut pas dépasser 200 caractères</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" formControlName="description" rows="4"></textarea>
+          <div *ngIf="formControls['description'].invalid && (formControls['description'].dirty || formControls['description'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['description'].errors?.['maxlength']">La description ne peut pas dépasser 1000 caractères</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">URL de l'image</label>
+          <input type="text" class="form-control" id="image" formControlName="image">
+          <div *ngIf="formControls['image'].invalid && (formControls['image'].dirty || formControls['image'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['image'].errors?.['required']">L'URL de l'image est requise</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="mise_de_depart" class="form-label">Prix de départ (€)</label>
+          <input type="number" class="form-control" id="mise_de_depart" formControlName="mise_de_depart" min="0.01" step="0.01">
+          <div *ngIf="formControls['mise_de_depart'].invalid && (formControls['mise_de_depart'].dirty || formControls['mise_de_depart'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['mise_de_depart'].errors?.['required']">Le prix de départ est requis</small>
+            <small *ngIf="formControls['mise_de_depart'].errors?.['min']">Le prix doit être supérieur à 0</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="increment" class="form-label">Incrément minimum (€)</label>
+          <input type="number" class="form-control" id="increment" formControlName="increment" min="0.01" step="0.01" value="10">
+          <div *ngIf="formControls['increment'].invalid && (formControls['increment'].dirty || formControls['increment'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['increment'].errors?.['required']">L'incrément est requis</small>
+            <small *ngIf="formControls['increment'].errors?.['min']">L'incrément doit être supérieur à 0</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date_debut" class="form-label">Date de début</label>
+          <input type="datetime-local" class="form-control" id="date_debut" formControlName="date_debut">
+          <div *ngIf="formControls['date_debut'].invalid && (formControls['date_debut'].dirty || formControls['date_debut'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['date_debut'].errors?.['required']">La date de début est requise</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="date_fin" class="form-label">Date de fin</label>
+          <input type="datetime-local" class="form-control" id="date_fin" formControlName="date_fin">
+          <div *ngIf="formControls['date_fin'].invalid && (formControls['date_fin'].dirty || formControls['date_fin'].touched)" 
+               class="text-danger">
+            <small *ngIf="formControls['date_fin'].errors?.['required']">La date de fin est requise</small>
+          </div>
+          <div *ngIf="auctionForm.errors?.['invalidDates']" class="text-danger">
+            <small>La date de fin doit être postérieure à la date de début</small>
+          </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a routerLink="/my-auctions" class="btn btn-secondary me-md-2">Annuler</a>
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || auctionForm.invalid">
+            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            {{ isSubmitting ? 'Création en cours...' : 'Créer l\'enchère' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

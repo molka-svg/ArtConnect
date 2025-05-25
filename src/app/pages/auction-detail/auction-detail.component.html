@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && enchere">
+    <div class="row">
+      <div class="col-md-6">
+        <img [src]="enchere.image" class="img-fluid rounded" [alt]="enchere.titre">
+      </div>
+      <div class="col-md-6">
+        <h2>{{ enchere.titre }}</h2>
+        <p class="text-muted">Par {{ enchere.artiste_nom }} {{ enchere.artiste_prenom }}</p>
+        <p>{{ enchere.description }}</p>
+        
+        <div class="card mb-4">
+          <div class="card-body">
+            <h4 class="card-title">Enchère en cours</h4>
+            <p class="display-4">{{ enchere.top_mise || enchere.mise_de_depart }} €</p>
+            <p *ngIf="enchere.top_mise" class="text-muted">
+              Offre actuelle par {{ mises[0]?.nom }} {{ mises[0]?.prenom }}
+            </p>
+            <p class="text-muted">Mise de départ: {{ enchere.mise_de_depart }} €</p>
+            <p class="text-muted">Incrément minimum: {{ enchere.increment }} €</p>
+            <p class="text-muted">Se termine le {{ enchere.date_fin }}</p>
+          </div>
+        </div>
+
+        <div *ngIf="currentUserId" class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Placer une offre</h5>
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">€</span>
+              <input type="number" class="form-control" 
+                     [(ngModel)]="nouvelleMise" 
+                     [min]="(enchere.top_mise || enchere.mise_de_depart) + enchere.increment">
+              <button class="btn btn-primary" (click)="placerMise()">Envoyer</button>
+            </div>
+            <p class="text-muted">
+              Votre offre doit être d'au moins {{ (enchere.top_mise || enchere.mise_de_depart) + enchere.increment }} DT
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <h4>Historique des offres</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Montant</th>
+            <th>Enchérisseur</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mise of mises">
+            <td>{{ mise.montant }} €</td>
+            <td>{{ mise.nom }} {{ mise.prenom }}</td>
+            <td>{{ mise.date_mise }}</td>
+          </tr>
+          <tr *ngIf="mises.length === 0">
+            <td colspan="3" class="text-center">Aucune offre pour le moment</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !enchere" class="alert alert-danger">
+    Enchère non trouvée ou terminée
+  </div>
+</div>
