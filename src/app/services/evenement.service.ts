@@ -55,9 +55,23 @@ export class EvenementService {
     );
   }
 
-  getAllEvenements(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/all`);
-  }
+// evenement.service.ts
+getAllEvenements(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/all`).pipe(
+    catchError(error => {
+      console.error('Error fetching events:', error);
+      let errorMessage = 'Failed to fetch events';
+      
+      if (error.error?.message) {
+        errorMessage = error.error.message;
+      } else if (error.status === 500) {
+        errorMessage = 'Server error occurred';
+      }
+      
+      return throwError(() => new Error(errorMessage));
+    })
+  );
+}
 
   getEvenementById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);

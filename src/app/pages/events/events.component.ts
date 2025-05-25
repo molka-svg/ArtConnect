@@ -15,12 +15,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class EventsComponent implements OnInit{
 events:any[]=[];
+ errorMessage: string = '';
 constructor(private service:EvenementService){}
 
-  ngOnInit(): void {
-    this.service.getAllEvenements().subscribe((data) => {
-      this.events = data;
-      console.log(data);
+   ngOnInit(): void {
+    this.service.getAllEvenements().subscribe({
+      next: (data) => {
+        this.events = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Error fetching events:', err);
+        this.errorMessage = 'Failed to load events. Please try again later.';
+        // You could also show a user-friendly message here
+      }
     });
   }
 }

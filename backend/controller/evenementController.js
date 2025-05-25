@@ -48,7 +48,6 @@ exports.getEvenementsEnAttente = async (req, res) => {
     if (req.user.role !== 'admin') {
       return res.status(403).json({ message: 'Accès non autorisé' });
     }
-    
     const [rows] = await db.promise().query(
       'SELECT e.*, CONCAT(u.prenom, " ", u.titre) AS organisateur_nom FROM evenement e JOIN users u ON e.organisateur_id = u.userid WHERE e.statut = "en_attente"'
     );
@@ -57,7 +56,6 @@ exports.getEvenementsEnAttente = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
-
 exports.approuverEvenement = async (req, res) => {
   try {
     if (req.user.role !== 'admin') {
@@ -65,6 +63,11 @@ exports.approuverEvenement = async (req, res) => {
     }
     
     const { id } = req.params;
+    
+    if (!id || isNaN(id)) {
+      return res.status(400).json({ message: 'ID d\'événement invalide' });
+    }
+    
     await db.promise().query('UPDATE evenement SET statut = "approuve" WHERE id = ?', [id]);
     res.json({ message: 'Événement approuvé avec succès' });
   } catch (err) {
@@ -89,7 +92,7 @@ exports.rejeterEvenement = async (req, res) => {
 exports.getAllEvenements = async (req, res) => {
   try {
     const [rows] = await db.promise().query(`
-      SELECT e.*, CONCAT(u.prenom, ' ', u.titre) AS organisateur_nom
+      SELECT e.*, CONCAT(u.prenom, ' ', u.nom) AS organisateur_nom
       FROM evenement e
       LEFT JOIN users u ON e.organisateur_id = u.userid
       WHERE e.statut = 'approuve'
@@ -99,7 +102,6 @@ exports.getAllEvenements = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération des événements', error: err.message });
   }
 };
-
 exports.getEvenementById = async (req, res) => {
   try {
     const { id } = req.params;

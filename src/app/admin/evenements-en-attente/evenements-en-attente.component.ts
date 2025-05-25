@@ -19,12 +19,14 @@ export class EvenementsEnAttenteComponent implements OnInit {
     this.loadEvenementsEnAttente();
   }
 
-  loadEvenementsEnAttente(): void {
-    this.adminService.getEvenementsEnAttente().subscribe({
-      next: (data) => this.evenementsEnAttente = data,
-      error: (err) => console.error('Erreur:', err)
-    });
-  }
+loadEvenementsEnAttente(): void {
+  this.adminService.getEvenementsEnAttente().subscribe({
+    next: (data) => {
+      this.evenementsEnAttente = data;
+    },
+    error: (err) => console.error('Erreur:', err)
+  });
+}
 
   approuverEvenement(id: number): void {
     if (confirm('Voulez-vous vraiment approuver cet événement ?')) {
