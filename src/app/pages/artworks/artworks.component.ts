@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink ,Router} from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { OeuvreService } from '../../services/oeuvre.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-artworks',
@@ -22,7 +23,7 @@ export class ArtworksComponent implements OnInit {
 
   constructor(
     private oeuvreService: OeuvreService,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +42,7 @@ export class ArtworksComponent implements OnInit {
         : true;
       const matchArtiste = this.artisteFiltre
         ? oeuvre.artiste_nom.toLowerCase().includes(this.artisteFiltre.toLowerCase())
-        : true; 
+        : true;
       return matchType && matchPrix && matchNom && matchArtiste;
     });
   }
@@ -56,7 +57,13 @@ export class ArtworksComponent implements OnInit {
     };
     this.panier.push(item);
     localStorage.setItem('panier', JSON.stringify(this.panier));
-    alert('Œuvre ajoutée au panier !');
+    Swal.fire({
+      title: 'Succès!',
+      text: 'Œuvre ajoutée au panier!',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false
+    });
   }
 
   voirDetails(oeuvre: any) {
