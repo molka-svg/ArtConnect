@@ -66,7 +66,21 @@ export class ArtworksComponent implements OnInit {
       showConfirmButton: false
     });
   }
+participerEnchere(oeuvre: any): void {
+  // Vérifier d'abord si l'enchère est active
+  if (this.isEnchereActive(oeuvre.date_debut, oeuvre.date_fin)) {
+    this.router.navigate(['/enchere', oeuvre.id]);
+  } else {
+    alert("Cette enchère n'est plus active ou n'a pas encore commencé");
+  }
+}
 
+isEnchereActive(startDate: string, endDate: string): boolean {
+  const now = new Date();
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  return now >= start && now < end;
+}
   voirDetails(oeuvre: any) {
     this.router.navigate(['/detail-artwork', oeuvre.oeuvre_id]);
   }
