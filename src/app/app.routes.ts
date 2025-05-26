@@ -25,7 +25,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AuctionComponent } from './pages/auction/auction.component';
 import { DetailArtworkComponent } from './pages/detail-artwork/detail-artwork.component';
 import { CreateAuctionComponent } from './artist/create-auction/create-auction.component';
-
+import { AuctionDetailComponent } from './pages/auction-detail/auction-detail.component';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, // Redirection par défaut vers home
   { path: 'home', component: HomeComponent },
@@ -52,6 +52,8 @@ export const routes: Routes = [
   {path:'auction',component:AuctionComponent},
    {path:'createAuction',component:CreateAuctionComponent},
    {path:'MyAuction',component:MyAuctionsComponent},
+   {path:'enchere/:id',component:AuctionDetailComponent},
+
 
 
   {

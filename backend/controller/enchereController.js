@@ -117,7 +117,6 @@ exports.getEncheresByArtiste = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
-
 exports.getEncheresActives = async (req, res) => {
   try {
     const [results] = await db.promise().query(
@@ -125,7 +124,9 @@ exports.getEncheresActives = async (req, res) => {
        FROM enchere e
        JOIN oeuvres o ON e.oeuvre_id = o.oeuvre_id
        JOIN users u ON o.artiste_id = u.userid
-       WHERE e.date_fin > NOW() AND e.est_validee = TRUE
+       WHERE e.date_fin > NOW() 
+         AND e.est_validee = TRUE
+         AND o.statut = 'approuve'
        ORDER BY e.date_fin ASC`
     );
     res.status(200).json(results);

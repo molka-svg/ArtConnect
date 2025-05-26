@@ -90,12 +90,36 @@ exports.approuverOeuvre = async (req, res) => {
       return res.status(403).json({ message: 'Accès non autorisé' });
     }
     const { id } = req.params;
+    
+    // 1. Mettre à jour le statut de l'œuvre
     await db.promise().query(
       'UPDATE oeuvres SET statut = "approuve" WHERE oeuvre_id = ?',
       [id]
     );
-    res.json({ message: 'Œuvre approuvée avec succès' });
+
+    // 2. Vérifier si c'est une œuvre de type "enchere" et valider l'enchère associée
+    const [oeuvre] = await db.promise().query(
+      'SELECT type FROM oeuvres WHERE oeuvre_id = ?',
+      [id]
+    );
+
+    let enchereValidee = false;
+    if (oeuvre[0] && oeuvre[0].type === 'enchere') {
+      const [updateResult] = await db.promise().query(
+        'UPDATE enchere SET est_validee = TRUE WHERE oeuvre_id = ?',
+        [id]
+      );
+      enchereValidee = updateResult.affectedRows > 0;
+    }
+
+    res.json({ 
+      message: 'Œuvre approuvée avec succès',
+      isEnchere: oeuvre[0]?.type === 'enchere',
+      enchereValidee: enchereValidee
+    });
+
   } catch (err) {
+    console.error('Erreur dans approuverOeuvre:', err);
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };

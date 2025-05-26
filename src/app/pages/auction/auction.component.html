@@ -21,9 +21,9 @@
           <p class="card-text">Artiste: {{ enchere.artiste_nom }} {{ enchere.artiste_prenom }}</p>
           <p class="card-text">Prix de départ: {{ enchere.mise_de_depart }} DT</p>
           <p class="card-text">Fin: {{ enchere.date_fin  }}</p>
-          <a [routerLink]="['/auction', enchere.enchere_id]" class="btn btn-primary">
-            Participer
-          </a>
+       <a [routerLink]="['/enchere', enchere.enchere_id]" class="btn btn-primary">
+  Participer
+</a>
         </div>
       </div>
     </div>
