@@ -37,9 +37,24 @@
           <span class="detail-label">Prix :</span>
           <span class="detail-value">{{ artwork?.prix }} DT</span>
         </div>
-           <button class="btn-cart" (click)="ajouterAuPanier(artwork)">
+
+        <!-- Bouton panier caché si c'est une enchère -->
+        <div *ngIf="artwork?.type !== 'enchere'">
+          <button class="btn-cart" (click)="ajouterAuPanier(artwork)">
             <i class="fas fa-shopping-cart">🛒</i>
           </button>
+        </div>
+
+        <!-- Bouton participer visible uniquement pour les enchères -->
+        <div *ngIf="artwork?.type === 'enchere'">
+          <button class="btn-participate" (click)="participerEnchere(artwork)"
+                  [disabled]="!isEnchereActive(artwork.date_debut, artwork.date_fin)">
+            <i class="fas fa-gavel"></i> Participer à l'enchère
+          </button>
+          <div *ngIf="!isEnchereActive(artwork.date_debut, artwork.date_fin)" class="text-danger mt-2">
+            Cette enchère n'est pas active actuellement
+          </div>
+        </div>
       </div>
     </div>
   </div>

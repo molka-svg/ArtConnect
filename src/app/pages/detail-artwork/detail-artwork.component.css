@@ -134,3 +134,29 @@
   background: #d63384;
   color: white;
 }
+.btn-participate {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.btn-participate:hover {
+  background-color: #e68a00;
+}
+
+.btn-participate:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.text-danger {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}

@@ -20,10 +20,19 @@
           <p class="card-text">{{ enchere.description }}</p>
           <p class="card-text">Artiste: {{ enchere.artiste_nom }} {{ enchere.artiste_prenom }}</p>
           <p class="card-text">Prix de départ: {{ enchere.mise_de_depart }} DT</p>
-          <p class="card-text">Début: {{ enchere.date_debut  }}</p>
-          <p class="card-text">Fin: {{ enchere.date_fin  }}</p>
-          <p class="card-text">Statut: 
-            <span >
+          <p class="card-text">
+            <strong>Début:</strong> {{ formatDateTime(enchere.date_debut) }}
+          </p>
+          <p class="card-text">
+            <strong>Fin:</strong> {{ formatDateTime(enchere.date_fin) }}
+          </p>
+          <p class="card-text">
+            <strong>Statut:</strong> 
+            <span ngClass="{
+              'text-success': isAuctionActive(enchere.date_debut, enchere.date_fin),
+              'text-warning': isAuctionComingSoon(enchere.date_debut),
+              'text-danger': !isAuctionActive(enchere.date_debut, enchere.date_fin)
+            }">
               {{ getAuctionStatus(enchere.date_debut, enchere.date_fin) }}
             </span>
           </p>
@@ -31,15 +40,15 @@
           <button [routerLink]="['/enchere', enchere.enchere_id]" 
                   class="btn btn-primary"
                   [disabled]="!isAuctionActive(enchere.date_debut, enchere.date_fin)"
-               >
+                  Class="{'btn-secondary': !isAuctionActive(enchere.date_debut, enchere.date_fin)}">
             Participer
           </button>
           
           <div *ngIf="isAuctionComingSoon(enchere.date_debut)" class="text-info mt-2">
-            Début dans: {{ timeUntilStart(enchere.date_debut) }}
+            <i class="fas fa-clock"></i> Début dans: {{ timeUntilStart(enchere.date_debut) }}
           </div>
           <div *ngIf="isAuctionActive(enchere.date_debut, enchere.date_fin)" class="text-warning mt-2">
-            Temps restant: {{ timeUntilEnd(enchere.date_fin) }}
+            <i class="fas fa-hourglass-half"></i> Temps restant: {{ timeUntilEnd(enchere.date_fin) }}
           </div>
         </div>
       </div>

@@ -35,6 +35,20 @@ export class DetailArtworkComponent implements OnInit {
       }
     );
   }
+  participerEnchere(artwork: any): void {
+  // Rediriger vers la page de participation à l'enchère
+  this.router.navigate(['/enchere', artwork.id]);
+}
+
+isEnchereActive(startDate: string, endDate: string): boolean {
+  if (!startDate || !endDate) return false;
+  
+  const now = new Date();
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  
+  return now >= start && now < end;
+}
   ajouterAuPanier(oeuvre: any): void {
     const item = {
       oeuvre_id: oeuvre.oeuvre_id,
